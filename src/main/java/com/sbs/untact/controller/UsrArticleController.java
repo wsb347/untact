@@ -44,6 +44,10 @@ public class UsrArticleController {
 		if (searchKeyword != null) {
 			searchKeyword = searchKeyword.trim();
 		}
+		
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
 
 		return articleService.getArticles(searchKeywordType, searchKeyword);
 	}
@@ -94,4 +98,5 @@ public class UsrArticleController {
 
 		return articleService.modifyArticle(id, title, body);
 	}
+	
 }
