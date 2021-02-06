@@ -23,8 +23,20 @@ public class MemberService {
 		return new ResultData("S-1", "성공하였습니다.");
 	}
 
-	public static Member doLogin(String loginId, String loginPW) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member getMember(int id) {
+		return memberDao.getMember(id);
+	}
+	
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
+	}
+
+	public Member getMemberByNickname(String nickname) {
+		return memberDao.getMemberByNickname(nickname);
+	}
+
+	public ResultData modifyMember(Map<String, Object> param) {
+		memberDao.modifyMember(param);
+		return new ResultData("S-1", "회원정보가 수정되었습니다.");
 	}
 }
