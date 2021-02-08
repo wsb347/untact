@@ -64,7 +64,6 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		Member existingMemberByLoginid = memberService.getMemberByLoginId(loginId);
-
 		if (session.getAttribute("loginedMemberId") != null) {
 			return new ResultData("F-4", "이미 로그인 되었습니다.");
 		}
@@ -84,7 +83,7 @@ public class UsrMemberController {
 		}
 
 		session.setAttribute("loginedMemberId", existingMemberByLoginid.getId());
-
+		
 		return new ResultData("T-1", String.format("%s님 환영합니다.", existingMemberByLoginid.getNickname()));
 	}
 

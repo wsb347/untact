@@ -15,6 +15,8 @@ import com.sbs.untact.util.Util;
 public class ArticleService {
 	@Autowired
 	private ArticleDao articleDao;
+	@Autowired
+	private MemberService memberService;
 
 	public Article getArticle(int id) {
 		return articleDao.getArticle(id);
@@ -22,7 +24,7 @@ public class ArticleService {
 
 	public ResultData addArticle(Map<String, Object> param) {
 		articleDao.addArticle(param);
-		
+
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
@@ -42,5 +44,21 @@ public class ArticleService {
 
 	public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
 		return articleDao.getArticles(searchKeywordType, searchKeyword);
+	}
+
+	public ResultData getActorCanModifyRd(Article article, int actorId) {
+		if(article.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+		
+		if(memberService.isAdmin(actorId)) {
+			return new ResultData("S-2", "관리자 권환으로 가능합니다.");
+		}
+
+		return new ResultData("F-1", "권한이 없습니다.");
+	}
+
+	public ResultData getActorCanDeleteRd(Article article, int actorId) {
+		return getActorCanModifyRd(article, actorId);
 	}
 }
