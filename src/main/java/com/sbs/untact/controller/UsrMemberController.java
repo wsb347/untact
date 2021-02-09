@@ -64,9 +64,6 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		Member existingMemberByLoginid = memberService.getMemberByLoginId(loginId);
-		if (session.getAttribute("loginedMemberId") != null) {
-			return new ResultData("F-4", "이미 로그인 되었습니다.");
-		}
 
 		System.out.println("로그인 정보 : " + session.getAttribute("loginedMemberId"));
 
@@ -90,10 +87,6 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("T-2", "이미 로그아웃 되었습니다.");
-		}
-
 		session.removeAttribute("loginedMemberId");
 
 		return new ResultData("T-1", "로그아웃 되었습니다.");
@@ -102,10 +95,6 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("F-1", "로그인 후 이용해주세요.");
-		}
-
 		if (param.isEmpty()) {
 			return new ResultData("F-2", "수정할 정보를 입력해주세요.");
 		}
