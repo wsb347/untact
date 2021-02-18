@@ -47,13 +47,16 @@ public class ArticleService {
 	}
 
 	public ResultData getActorCanModifyRd(Article article, int actorId) {
-		if(article.getMemberId() == actorId) {
+		if (article.getMemberId() == actorId) {
 			return new ResultData("S-1", "가능합니다.");
 		}
-		
-		if(memberService.isAdmin(actorId)) {
+
+		if (memberService.isAdmin(actorId)) {
 			return new ResultData("S-2", "관리자 권환으로 가능합니다.");
 		}
+
+		System.out.println("로그인아이디" + actorId);
+		System.out.println("게시글로그인아이디" + article.getMemberId());
 
 		return new ResultData("F-1", "권한이 없습니다.");
 	}

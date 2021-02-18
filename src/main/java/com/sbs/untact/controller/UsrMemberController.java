@@ -80,7 +80,7 @@ public class UsrMemberController {
 		}
 
 		session.setAttribute("loginedMemberId", existingMemberByLoginid.getId());
-		
+
 		return new ResultData("T-1", String.format("%s님 환영합니다.", existingMemberByLoginid.getNickname()));
 	}
 
@@ -91,7 +91,7 @@ public class UsrMemberController {
 
 		return new ResultData("T-1", "로그아웃 되었습니다.");
 	}
-	
+
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
@@ -104,7 +104,5 @@ public class UsrMemberController {
 
 		return memberService.modifyMember(param);
 	}
-	
-	
 
 }

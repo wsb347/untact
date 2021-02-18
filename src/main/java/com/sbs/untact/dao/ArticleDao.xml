@@ -8,7 +8,7 @@
 		SELECT *
 		FROM article
 		WHERE 1
-		AND a.id = #{id};
+		AND id = #{id};
 	</select>
 
 	<select id="getForPrintArticle" resultType="Article">
@@ -36,7 +36,7 @@
 			AND (a.title LIKE CONCAT('%',#{searchKeyword},'%') OR
 			a.`body` LIKE CONCAT('%',#{searchKeyword},'%'))
 		</if>
-		ORDER BY a.id DESC;
+		ORDER BY a.id DESC
 
 	</select>
 
@@ -44,8 +44,7 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title =
-		#{title},
+		title =	#{title},
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>

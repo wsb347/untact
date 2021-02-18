@@ -19,9 +19,6 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		System.out.println("실행되나?");
-
 		HttpSession session = request.getSession();
 
 		// 로그인 여부에 관련된 정보를 request에 담는다.

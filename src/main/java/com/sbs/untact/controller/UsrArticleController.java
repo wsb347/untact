@@ -61,7 +61,14 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
+		int memberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		param.put("memberId", memberId);
+		if(memberId == 0) {
+			return new ResultData("F-2", "로그인 후 이용해주세요.");			
+		}
+		System.out.println("로그인 아이디 : " + memberId);
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "title을 입력해주세요.");
 		}
