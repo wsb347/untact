@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -61,11 +62,30 @@ public class ArticleService {
 
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
+	
+	public ResultData getActorCanModifyRd(Reply reply, int actorId) {
+		if (reply.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+
+		if (memberService.isAdmin(actorId)) {
+			return new ResultData("S-2", "관리자 권환으로 가능합니다.");
+		}
+
+		System.out.println("로그인아이디" + actorId);
+		System.out.println("게시글로그인아이디" + reply.getMemberId());
+
+		return new ResultData("F-1", "권한이 없습니다.");
+	}
 
 	public ResultData getActorCanDeleteRd(Article article, int actorId) {
 		return getActorCanModifyRd(article, actorId);
 	}
 
+	public ResultData getActorCanDeleteRd(Reply reply, int actorId) {
+		return getActorCanModifyRd(reply, actorId);
+	}
+	
 	public Article getForPrintArticle(int id) {
 		return articleDao.getForPrintArticle(id);
 	}
@@ -90,5 +110,25 @@ public class ArticleService {
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
+	}
+
+	public Reply getReply(int id) {
+		return articleDao.getReply(id);
+	}
+
+	public ResultData deleteReply(Integer id) {
+		articleDao.deleteReply(id);
+
+		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+
+	public List<Reply> getReplies(int articleId) {
+		return articleDao.getReplies(articleId);
+	}
+
+	public ResultData modifyReply(int id, String body) {
+		articleDao.modifyReply(id, body);
+
+		return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
 	}
 }

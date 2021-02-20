@@ -15,7 +15,16 @@
 		SELECT *
 		FROM board
 		WHERE 1
-		AND id = #{id};
+		AND id
+		= #{id};
+	</select>
+
+	<select id="getReply" resultType="Reply">
+		SELECT *
+		FROM reply
+		WHERE 1
+		AND id
+		= #{id};
 	</select>
 
 	<select id="getForPrintArticle" resultType="Article">
@@ -45,6 +54,15 @@
 			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
+	</select>
+
+	<select id="getReplies" resultType="Reply">
+		SELECT *
+		FROM reply
+		WHERE 1
+		AND
+		articleId = #{articleId}
+		ORDER BY articleId DESC
 
 	</select>
 
@@ -83,17 +101,23 @@
 		memberId = #{memberId}
 	</insert>
 
-<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
+	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO Reply
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		`body` = #{body},
+		`body` =
+		#{body},
 		articleId = #{articleId},
 		memberId = #{memberId}
 	</insert>
 
 	<delete id="deleteArticle">
 		DELETE FROM article
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteReply">
+		DELETE FROM reply
 		WHERE id = #{id}
 	</delete>
 
@@ -110,6 +134,13 @@
 				`body` = #{body}
 			</if>
 		</set>
+		WHERE id = #{id}
+	</update>
+
+	<update id="modifyReply">
+		UPDATE reply
+		set updateDate = NOW(),
+		`body` = #{body}
 		WHERE id = #{id}
 	</update>
 

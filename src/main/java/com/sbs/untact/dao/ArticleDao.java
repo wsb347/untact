@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
@@ -32,4 +33,12 @@ public interface ArticleDao {
 	public Board getBoard(@Param(value = "id") Integer id);
 
 	public void addReply(Map<String, Object> param);
+
+	public Reply getReply(@Param(value = "id") Integer id);
+
+	public void deleteReply(@Param(value = "id") int id);
+
+	public List<Reply> getReplies(@Param(value = "articleId") int articleId);
+
+	public void modifyReply(@Param(value = "id") int id, @Param(value = "body")  String body);
 }
