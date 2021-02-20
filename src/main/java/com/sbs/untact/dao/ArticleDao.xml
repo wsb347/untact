@@ -83,6 +83,15 @@
 		memberId = #{memberId}
 	</insert>
 
+<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO Reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		`body` = #{body},
+		articleId = #{articleId},
+		memberId = #{memberId}
+	</insert>
+
 	<delete id="deleteArticle">
 		DELETE FROM article
 		WHERE id = #{id}
