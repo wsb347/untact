@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.util.Util;
@@ -30,12 +31,19 @@ public class UsrArticleController {
 			return new ResultData("F-2", "존재하지 않는 번호입니다.");
 		}
 
-		return new ResultData("T-1", "성공하였습니다.", "article", article);
+		return new ResultData("S-1", "성공하였습니다.", "article", article);
 	}
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> showList(String searchKeywordType, String searchKeyword) {
+	public ResultData showList(@RequestParam(defaultValue = "1") Integer boardId, String searchKeywordType,
+			String searchKeyword, @RequestParam(defaultValue = "1") Integer page) {
+		Board board = articleService.getBoard(boardId);
+
+		if (board == null) {
+			return new ResultData("F-1", "실패하였습니다.", "msg", "해당 게시판이 없습니다.");
+		}
+
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -56,7 +64,12 @@ public class UsrArticleController {
 			searchKeywordType = null;
 		}
 
-		return articleService.getArticles(searchKeywordType, searchKeyword);
+		int itemsInAPage = 10;
+
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
+				itemsInAPage);
+
+		return new ResultData("S-1", "성공하였습니다.", "articles", articles);
 	}
 
 	@RequestMapping("/usr/article/doAdd")
@@ -65,8 +78,8 @@ public class UsrArticleController {
 		int memberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		param.put("memberId", memberId);
-		if(memberId == 0) {
-			return new ResultData("F-2", "로그인 후 이용해주세요.");			
+		if (memberId == 0) {
+			return new ResultData("F-2", "로그인 후 이용해주세요.");
 		}
 		System.out.println("로그인 아이디 : " + memberId);
 		if (param.get("title") == null) {

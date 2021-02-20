@@ -11,21 +11,51 @@
 		AND id = #{id};
 	</select>
 
+	<select id="getBoard" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE 1
+		AND id = #{id};
+	</select>
+
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT a.*, 
-		IFNULL(m.nickname, "탈퇴회원")extra_writer 
+		SELECT a.*,
+		IFNULL(m.nickname, "탈퇴회원")extra_writer
 		FROM article AS a
-		LEFT JOIN `member` AS m
+		LEFT JOIN
+		`member` AS m
 		ON a.memberId = m.id
 		WHERE 1
-		AND a.id = #{id};
+		AND
+		a.id = #{id};
 	</select>
 
 	<select id="getArticles" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE 1
+		<if test="searchKeywordType == 'title'">
+			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND `body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+
+	</select>
+
+	<select id="getForPrintArticles" resultType="Article">
 		SELECT a.*, IFNULL(m.nickname, "탈퇴회원")extra_writer FROM article AS a
 		LEFT JOIN
 		`member` AS m
 		ON a.memberId = m.id WHERE 1
+		<if test="boardId != null">
+			AND boardId = #{boardId}
+		</if>
 		<if test="searchKeywordType == 'title'">
 			AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
 		</if>
@@ -37,6 +67,9 @@
 			a.`body` LIKE CONCAT('%',#{searchKeyword},'%'))
 		</if>
 		ORDER BY a.id DESC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
 
 	</select>
 
@@ -44,7 +77,8 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title =	#{title},
+		title =
+		#{title},
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>

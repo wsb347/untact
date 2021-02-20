@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -67,5 +68,19 @@ public class ArticleService {
 
 	public Article getForPrintArticle(int id) {
 		return articleDao.getForPrintArticle(id);
+	}
+
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword, Integer page,
+			int itemsInAPage) {
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+		
+		System.out.println("Start : " + limitStart);
+		System.out.println("take : " + limitTake);
+		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
+	}
+
+	public Board getBoard(Integer id) {
+		return articleDao.getBoard(id);
 	}
 }
