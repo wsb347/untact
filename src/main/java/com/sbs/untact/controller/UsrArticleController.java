@@ -90,24 +90,6 @@ public class UsrArticleController {
 		return articleService.addArticle(param);
 	}
 
-	@RequestMapping("/usr/article/doAddReply")
-	@ResponseBody
-	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpSession session) {
-		int memberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
-		param.put("memberId", memberId);
-		
-		if (param.get("articleId") == null) {
-			return new ResultData("F-1", "articleId을 입력해주세요.");
-		}
-
-		if (param.get("body") == null) {
-			return new ResultData("F-1", "body를 입력해주세요.");
-		}
-
-		return articleService.addReply(param);
-	}
-
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpSession session) {
