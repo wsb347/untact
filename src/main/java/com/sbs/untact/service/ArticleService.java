@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -61,6 +62,7 @@ public class ArticleService {
 
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
+	
 
 	public ResultData getActorCanDeleteRd(Article article, int actorId) {
 		return getActorCanModifyRd(article, actorId);
@@ -84,11 +86,4 @@ public class ArticleService {
 		return articleDao.getBoard(id);
 	}
 
-	public ResultData addReply(Map<String, Object> param) {
-		articleDao.addReply(param);
-
-		int id = Util.getAsInt(param.get("id"), 0);
-
-		return new ResultData("S-1", "성공하였습니다.", "id", id);
-	}
 }

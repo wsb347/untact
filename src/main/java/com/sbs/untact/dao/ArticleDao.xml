@@ -15,7 +15,8 @@
 		SELECT *
 		FROM board
 		WHERE 1
-		AND id = #{id};
+		AND id
+		= #{id};
 	</select>
 
 	<select id="getForPrintArticle" resultType="Article">
@@ -45,7 +46,6 @@
 			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
-
 	</select>
 
 	<select id="getForPrintArticles" resultType="Article">
@@ -80,15 +80,6 @@
 		title =
 		#{title},
 		`body` = #{body},
-		memberId = #{memberId}
-	</insert>
-
-<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO Reply
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		`body` = #{body},
-		articleId = #{articleId},
 		memberId = #{memberId}
 	</insert>
 

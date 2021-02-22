@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
@@ -30,6 +31,4 @@ public interface ArticleDao {
 			@Param(value = "limitTake") int limitTake);
 
 	public Board getBoard(@Param(value = "id") Integer id);
-
-	public void addReply(Map<String, Object> param);
 }

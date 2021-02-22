@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.util.Util;
@@ -78,7 +79,7 @@ public class UsrArticleController {
 		int memberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		param.put("memberId", memberId);
-		
+
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "title을 입력해주세요.");
 		}
