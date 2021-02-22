@@ -43,4 +43,9 @@ public class MemberService {
 	public boolean isAdmin(int actorId) {
 		return actorId == 1;
 	}
+
+	public boolean inAdim(Member actor) {
+		return isAdmin(actor.getId());
+	}
+
 }

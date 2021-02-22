@@ -77,8 +77,8 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title =
-		#{title},
+		boardId = #{boardId},
+		title = #{title},
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>

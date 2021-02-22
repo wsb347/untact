@@ -16,7 +16,7 @@ import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
 
 @Controller
-public class ReplyController {
+public class UsrReplyController {
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
