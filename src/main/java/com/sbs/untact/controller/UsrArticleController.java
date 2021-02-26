@@ -3,7 +3,7 @@ package com.sbs.untact.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
-import com.sbs.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
@@ -75,10 +73,10 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
-		int memberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
-		param.put("memberId", memberId);
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		
+		param.put("memberId", loginedMemberId);
 
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "title을 입력해주세요.");
@@ -88,14 +86,16 @@ public class UsrArticleController {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
+		System.out.println("memberId : " + param.get("memberId"));
+
 		return articleService.addArticle(param);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(Integer id, HttpSession session) {
-		int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+	public ResultData doDelete(Integer id, HttpServletRequest req) {
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -117,9 +117,9 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpSession session) {
-		int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}

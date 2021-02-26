@@ -5,12 +5,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dao.MemberDao;
-import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.util.Util;
 
 @Service
 public class MemberService {
@@ -46,6 +43,10 @@ public class MemberService {
 
 	public boolean inAdim(Member actor) {
 		return isAdmin(actor.getId());
+	}
+
+	public Member getMemberByAuthKey(String authKey) {
+		return memberDao.getMemberByAuthKey(authKey);
 	}
 
 }
