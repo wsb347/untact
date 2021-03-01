@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 

@@ -17,7 +17,7 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 
 @Controller
-public class AdmArticleController {
+public class AdmArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
 
@@ -34,13 +34,12 @@ public class AdmArticleController {
 	}
 
 	@RequestMapping("/adm/article/list")
-	@ResponseBody
-	public ResultData showList(@RequestParam(defaultValue = "1") Integer boardId, String searchKeywordType,
+	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") Integer boardId, String searchKeywordType,
 			String searchKeyword, @RequestParam(defaultValue = "1") Integer page) {
 		Board board = articleService.getBoard(boardId);
-
+		
 		if (board == null) {
-			return new ResultData("F-1", "실패하였습니다.", "msg", "해당 게시판이 없습니다.");
+			return msgAndBack(req, "존재하지않은 게시판입니다.");
 		}
 
 		if (searchKeywordType != null) {
@@ -67,8 +66,9 @@ public class AdmArticleController {
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
-
-		return new ResultData("S-1", "성공하였습니다.", "articles", articles);
+		req.setAttribute("articles", articles);
+		
+		return "adm/article/list";
 	}
 
 	@RequestMapping("/adm/article/doAdd")
