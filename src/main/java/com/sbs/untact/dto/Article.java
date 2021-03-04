@@ -1,5 +1,8 @@
 package com.sbs.untact.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +22,15 @@ public class Article {
 	private String extra_writer;
 	private String extra_boardName;
 	private String extra__thumbImg;
+	
+	private Map<String, Object> extra;
+
+	public Map<String, Object> getExtraNotNull() {
+		if ( extra == null ) {
+			extra = new HashMap<String, Object>();
+		}
+
+		return extra;
+	}
+
 }

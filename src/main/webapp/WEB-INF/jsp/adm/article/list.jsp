@@ -47,7 +47,7 @@
 			<div class="flex justify-between items-center mt-4">
 				<a href="detail?id=${article.id}"
 					class="text-blue-500 hover:underline">자세히 보기</a> <a
-					href="doModify?id=${article.id}"
+					href="modify?id=${article.id}"
 					class="ml-2 text-blue-500 hover:underline">수정</a> <a
 					onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
 					href="doDelete?id=${article.id}"

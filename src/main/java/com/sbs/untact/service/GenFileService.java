@@ -146,4 +146,8 @@ public class GenFileService {
 		genFileDao.deleteFile(genFile.getId());
 	}
 
+	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
+		return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
+	}
+
 }
