@@ -13,3 +13,8 @@ spring:
     password: sbs123414
 mybatis:
   type-aliases-package: com.sbs.untact.dto
+custom:
+  genFileDirPath: D:/work/untact-file
+  logging:
+    dir: log
+    level: debug

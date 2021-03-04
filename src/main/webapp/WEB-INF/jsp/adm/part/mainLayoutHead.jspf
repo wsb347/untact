@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ include file="head.jspf"%>
 
 <header class="top-bar h-20 bg-white">
 	<div class="container mx-auto h-full flex">
@@ -29,7 +29,7 @@
 				</li>
 				<li>
 					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../article/list">
+						href="../article/list?boardId=1">
 						<span>게시물 관리</span>
 					</a>
 				</li>
@@ -44,4 +44,3 @@
 		</nav>
 	</div>
 </header>
-<%@ include file="head.jspf"%>

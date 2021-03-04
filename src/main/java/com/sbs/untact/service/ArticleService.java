@@ -15,6 +15,8 @@ import com.sbs.untact.util.Util;
 @Service
 public class ArticleService {
 	@Autowired
+	private GenFileService genFileService;
+	@Autowired
 	private ArticleDao articleDao;
 	@Autowired
 	private MemberService memberService;
@@ -27,6 +29,18 @@ public class ArticleService {
 		articleDao.addArticle(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
+		
+		String genFileIdsStr = Util.ifEmpty((String)param.get("genFileIdsStr"), null);
+		
+		if ( genFileIdsStr != null ) {
+			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
+
+			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
+			// 그것을 뒤늦게라도 이렇게 고처야 한다.
+			for (int genFileId : genFileIds) {
+				genFileService.changeRelId(genFileId, id);
+			}
+		}
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
@@ -53,15 +67,11 @@ public class ArticleService {
 		}
 
 		if (memberService.isAdmin(actorId)) {
-			return new ResultData("S-2", "관리자 권환으로 가능합니다.");
+			return new ResultData("S-2", "가능합니다.");
 		}
-
-		System.out.println("로그인아이디" + actorId);
-		System.out.println("게시글로그인아이디" + article.getMemberId());
 
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
-	
 
 	public ResultData getActorCanDeleteRd(Article article, int actorId) {
 		return getActorCanModifyRd(article, actorId);
@@ -71,17 +81,16 @@ public class ArticleService {
 		return articleDao.getForPrintArticle(id);
 	}
 
-	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword, Integer page,
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword, int page,
 			int itemsInAPage) {
+		
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 		
-		System.out.println("Start : " + limitStart);
-		System.out.println("take : " + limitTake);
 		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
 	}
 
-	public Board getBoard(Integer id) {
+	public Board getBoard(int id) {
 		return articleDao.getBoard(id);
 	}
 
