@@ -20,6 +20,7 @@ import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmArticleController extends BaseController {
@@ -112,16 +113,6 @@ public class AdmArticleController extends BaseController {
 
 		int newArticleId = (int) addArticleRd.getBody().get("id");
 
-		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-		for (String fileInputName : fileMap.keySet()) {
-			MultipartFile multipartFile = fileMap.get(fileInputName);
-
-			if (multipartFile.isEmpty() == false) {
-				genFileService.save(multipartFile, newArticleId);
-			}
-		}
-
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
 				"../article/detail?id=" + newArticleId);
 	}
@@ -178,10 +169,12 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
-		if (id == null) {
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		if (id == 0) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
@@ -197,7 +190,7 @@ public class AdmArticleController extends BaseController {
 			return actorCanModifyRd;
 		}
 
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(param);
 	}
 
 }

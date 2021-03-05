@@ -41,7 +41,7 @@ public class GenFileService {
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
 
-	public ResultData save(MultipartFile multipartFile, int relId) {
+	public ResultData save(MultipartFile multipartFile) {
 		String fileInputName = multipartFile.getName();
 		String[] fileInputNameBits = fileInputName.split("__");
 
@@ -56,6 +56,7 @@ public class GenFileService {
 		}
 
 		String relTypeCode = fileInputNameBits[1];
+		int relId = Integer.parseInt(fileInputNameBits[2]);
 		String typeCode = fileInputNameBits[3];
 		String type2Code = fileInputNameBits[4];
 		int fileNo = Integer.parseInt(fileInputNameBits[5]);
@@ -71,6 +72,14 @@ public class GenFileService {
 		}
 
 		String fileDir = Util.getNowYearMonthDateStr();
+
+		if (relId > 0) {
+			GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+
+			if (oldGenFile != null) {
+				deleteGenFile(oldGenFile);
+			}
+		}
 
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
@@ -103,9 +112,13 @@ public class GenFileService {
 		return genFileDao.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
-	public ResultData saveFiles(MultipartRequest multipartRequest) {
+	public GenFile getGenFile(int id) {
+		return genFileDao.getGenFileById(id);
+	}
+
+	public ResultData saveFiles(Map<String, Object> param, MultipartRequest multipartRequest) {
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-		
+
 		Map<String, ResultData> filesResultData = new HashMap<>();
 		List<Integer> genFileIds = new ArrayList<>();
 
@@ -113,33 +126,55 @@ public class GenFileService {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
 
 			if (multipartFile.isEmpty() == false) {
-				ResultData fileResultData = save(multipartFile, 0);
+				ResultData fileResultData = save(multipartFile);
 				int genFileId = (int) fileResultData.getBody().get("id");
 				genFileIds.add(genFileId);
 
 				filesResultData.put(fileInputName, fileResultData);
 			}
 		}
-		
+
 		String genFileIdsStr = Joiner.on(",").join(genFileIds);
 
+		// 삭제 시작
+		int deleteCount = 0;
+
+		for (String inputName : param.keySet()) {
+			String[] inputNameBits = inputName.split("__");
+
+			if (inputNameBits[0].equals("deleteFile")) {
+				String relTypeCode = inputNameBits[1];
+				int relId = Integer.parseInt(inputNameBits[2]);
+				String typeCode = inputNameBits[3];
+				String type2Code = inputNameBits[4];
+				int fileNo = Integer.parseInt(inputNameBits[5]);
+
+				GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+
+				if (oldGenFile != null) {
+					deleteGenFile(oldGenFile);
+					deleteCount++;
+				}
+			}
+		}
+
 		return new ResultData("S-1", "파일을 업로드하였습니다.", "filesResultData", filesResultData, "genFileIdsStr",
-				genFileIdsStr);
+				genFileIdsStr, "deleteCount", deleteCount);
 	}
 
 	public void changeRelId(int id, int relId) {
 		genFileDao.changeRelId(id, relId);
 	}
 
-	public void deleteFiles(String relTypeCode, int relId) {
+	public void deleteGenFiles(String relTypeCode, int relId) {
 		List<GenFile> genFiles = genFileDao.getGenFiles(relTypeCode, relId);
 
-		for ( GenFile genFile : genFiles ) {
-			deleteFile(genFile);
+		for (GenFile genFile : genFiles) {
+			deleteGenFile(genFile);
 		}
 	}
 
-	private void deleteFile(GenFile genFile) {
+	private void deleteGenFile(GenFile genFile) {
 		String filePath = genFile.getFilePath(genFileDirPath);
 		Util.delteFile(filePath);
 

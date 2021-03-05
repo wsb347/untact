@@ -15,6 +15,7 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
@@ -117,10 +118,12 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 		
-		if (id == null) {
+		int id = Util.getAsInt(param.get("id"), 0);
+		
+		if (param.get("id") == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
@@ -136,7 +139,7 @@ public class UsrArticleController {
 			return actorCanModifyRd;
 		}
 
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(param);
 	}
 
 }

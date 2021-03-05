@@ -4,22 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sbs.untact.dao.GenFileDao">
-	<select id="getGenFiles" resultType="GenFile">
-		SELECT *
-		FROM genFile
-		WHERE 1
-		AND relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
-		<if test="typeCode != null">
-			AND typeCode = #{typeCode}
-		</if>
-		<if test="type2Code != null">
-			AND type2Code = #{type2Code}
-		</if>
-		ORDER BY typeCode, type2Code, fileNo
-		
-	</select>
-
 	<insert id="saveMeta" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO genFile
 		SET regDate = NOW(),
@@ -44,12 +28,44 @@
 		SELECT *
 		FROM genFile
 		WHERE 1
+		<if test="relTypeCode != null">
+			AND relTypeCode = #{relTypeCode}
+		</if>
+		<if test="relId != null">
+			AND relId = #{relId}
+		</if>
+		<if test="typeCode != null">
+			AND typeCode = #{typeCode}
+		</if>
+		<if test="type2Code != null">
+			AND type2Code = #{type2Code}
+		</if>
+		<if test="fileNo != null">
+			AND fileNo = #{fileNo}
+		</if>
+	</select>
+	
+	<select id="getGenFileById" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND id = #{id}
+	</select>
+
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
 		AND relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
-		AND typeCode =
-		#{typeCode}
-		AND type2Code = #{type2Code}
-		AND fileNo = #{fileNo}
+		AND relId =
+		#{relId}
+		<if test="typeCode != null">
+			AND typeCode = #{typeCode}
+		</if>
+		<if test="type2Code != null">
+			AND type2Code = #{type2Code}
+		</if>
+		ORDER BY typeCode, type2Code, fileNo
 	</select>
 
 	<update id="changeRelId">
@@ -60,7 +76,7 @@
 		</set>
 		WHERE id = #{id}
 	</update>
-	
+
 	<delete id="deleteFiles">
 		DELETE FROM genFile
 		WHERE relTypeCode = #{relTypeCode}
@@ -71,6 +87,4 @@
 		DELETE FROM genFile
 		WHERE id = #{id}
 	</delete>
-	
-
 </mapper>
