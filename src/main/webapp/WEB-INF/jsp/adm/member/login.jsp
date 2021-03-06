@@ -3,7 +3,6 @@
 
 <%@ include file="../part/head.jspf"%>
 
-
 <script>
 	const LoginForm__checkAndSubmitDone = false;
 	function LoginForm__checkAndSubmit(form) {
@@ -14,14 +13,14 @@
 		form.loginId.value = form.loginId.value.trim();
 
 		if (form.loginId.value.length == 0) {
-			alert('로그인아이디를 입력해주세요.');
+			alert('아이디를 입력해주세요.');
 			form.loginId.focus();
 
 			return;
 		}
 
 		if (form.loginPw.value.length == 0) {
-			alert('로그인비번을 입력해주세요.');
+			alert('비밀번호를 입력해주세요.');
 			form.loginPw.focus();
 
 			return;
@@ -31,16 +30,15 @@
 		LoginForm__checkAndSubmitDone = true;
 	}
 </script>
+
 <section class="section-login">
 	<div
 		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
-				<a href="#" class="logo">
-					<span>
-						<i class="fas fa-people-arrows"></i>
-					</span>
-					<span>UNTACT</span>
+				<a href="#" class="logo"> <span> <i
+						class="fas fa-people-arrows"></i>
+				</span> <span>UNTACT</span>
 				</a>
 			</div>
 			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mt-4"
@@ -76,7 +74,10 @@
 					<div class="p-1">
 						<input
 							class="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-							type="submit" value="로그인" />
+							type="submit" value="로그인" /> 
+								<a href="join"
+							class="bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+							type="submit">회원가입</a> 
 					</div>
 				</div>
 			</form>

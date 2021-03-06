@@ -78,5 +78,53 @@ public class AdmMemberController {
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
 	}
+	
+	@RequestMapping("/adm/member/join")
+	public String join() {
+		return "adm/member/join";
+	}
+	
+	@RequestMapping("/adm/member/doJoin")
+	@ResponseBody
+	public String doJoin(@RequestParam Map<String, Object> param) {
+		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
+		Member existingMemberByNickname = memberService.getMemberByNickname((String) param.get("nickname"));
+
+		if (existingMember != null) {
+			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 로그인아이디입니다.", param.get("loginId")));
+		}
+
+		if (existingMemberByNickname != null) {
+			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 닉네임입니다.", param.get("nickname")));
+		}
+
+		if (param.get("loginId") == null) {
+			return Util.msgAndBack("loginId(을)를 입력해주세요.");
+		}
+
+		if (param.get("loginPw") == null) {
+			return Util.msgAndBack("loginPw(을)를 입력해주세요.");
+		}
+
+		if (param.get("nickname") == null) {
+			return Util.msgAndBack("nickname(을)를 입력해주세요.");
+		}
+
+		if (param.get("name") == null) {
+			return Util.msgAndBack("name(을)를 입력해주세요.");
+		}
+
+		if (param.get("cellphoneNo") == null) {
+			return Util.msgAndBack("cellphoneNo(을)를 입력해주세요.");
+		}
+
+		if (param.get("email") == null) {
+			return Util.msgAndBack("email(을)를 입력해주세요.");
+		}
+
+		memberService.memberJoin(param);
+		
+		return Util.msgAndReplace("회원가입 되었습니다.", "../member/login");
+		}
 
 }

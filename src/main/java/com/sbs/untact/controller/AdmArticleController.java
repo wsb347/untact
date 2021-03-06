@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
@@ -110,27 +109,30 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMemberId);
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return msgAndBack(req, "관리자만 가능합니다");
 		}
 
-		return articleService.deleteArticle(id);
+		int boardId = article.getBoardId();
+
+		articleService.deleteArticle(id);
+
+		return msgAndReplace(req, String.format("%d번 게시물이 삭제되었습니다.", id), "../article/list?boardId=" + boardId);
 	}
 
 	@RequestMapping("/adm/article/modify")
