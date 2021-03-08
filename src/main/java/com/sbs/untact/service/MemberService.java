@@ -1,5 +1,6 @@
 package com.sbs.untact.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +37,27 @@ public class MemberService {
 		memberDao.modifyMember(param);
 		return new ResultData("S-1", "회원정보가 수정되었습니다.");
 	}
-
-	public boolean isAdmin(int actorId) {
-		return actorId == 1;
-	}
-
-	public boolean inAdim(Member actor) {
-		return isAdmin(actor.getId());
+	
+	public boolean isAdmin(Member actor) {
+		return actor.getAuthLevel() == 7;
 	}
 
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);
 	}
+
+	public List<Member> getMembers() {
+		
+		return memberDao.getMembers();
+	}
+
+	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+
+		return memberDao.getForPrintMembers(searchKeywordType, searchKeyword, limitStart, limitTake);
+	}
+
+
 
 }

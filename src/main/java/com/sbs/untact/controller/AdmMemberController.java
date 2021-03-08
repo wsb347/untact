@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,16 +46,16 @@ public class AdmMemberController {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
 		}
 
-		if (memberService.inAdim(existingMemberByLoginid) == false) {
+		if (memberService.isAdmin(existingMemberByLoginid) == false) {
 			return Util.msgAndBack("관리자만 접근할 수 있는 페이지 입니다.");
 		}
 
 		session.setAttribute("loginedMemberId", existingMemberByLoginid.getId());
 
 		String msg = String.format("%s님 환영합니다.", existingMemberByLoginid.getNickname());
-		
-		redirectUrl = Util.ifEmpty(redirectUrl,"../home/main");
-		
+
+		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
+
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
@@ -70,7 +71,7 @@ public class AdmMemberController {
 
 		return memberService.modifyMember(param);
 	}
-	
+
 	@RequestMapping("/adm/member/doLogout")
 	@ResponseBody
 	public String doLogout(HttpSession session) {
@@ -78,12 +79,12 @@ public class AdmMemberController {
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
 	}
-	
+
 	@RequestMapping("/adm/member/join")
 	public String join() {
 		return "adm/member/join";
 	}
-	
+
 	@RequestMapping("/adm/member/doJoin")
 	@ResponseBody
 	public String doJoin(@RequestParam Map<String, Object> param) {
@@ -123,8 +124,40 @@ public class AdmMemberController {
 		}
 
 		memberService.memberJoin(param);
-		
+
 		return Util.msgAndReplace("회원가입 되었습니다.", "../member/login");
+	}
+
+	@RequestMapping("/adm/member/list")
+	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
 		}
+
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "nickname";
+		}
+
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
+
+		if (searchKeyword != null) {
+			searchKeyword = searchKeyword.trim();
+		}
+
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
+
+		int itemsInAPage = 10;
+
+		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, page, itemsInAPage);
+
+		req.setAttribute("members", members);
+
+		return "adm/member/list";
+	}
 
 }

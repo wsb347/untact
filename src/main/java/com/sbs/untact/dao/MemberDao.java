@@ -1,5 +1,6 @@
 package com.sbs.untact.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,4 +21,10 @@ public interface MemberDao {
 	public void modifyMember(Map<String, Object> param);
 
 	public Member getMemberByAuthKey(@Param(value = "authKey") String authKey);
+
+	public List<Member> getMembers();
+
+	public List<Member> getForPrintMembers(@Param(value = "searchKeywordType") String searchKeywordType,
+			@Param(value = "searchKeyword") String searchKeyword, @Param(value = "limitStart") int limitStart,
+			@Param(value = "limitTake") int limitTake);
 }

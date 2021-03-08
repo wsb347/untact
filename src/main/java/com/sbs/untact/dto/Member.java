@@ -17,9 +17,16 @@ public class Member {
 	@JsonIgnore
 	private String loginPw;
 	@JsonIgnore
+	private int authLevel;
+	@JsonIgnore
 	private String authKey;
 	private String nickname;
 	private String name;
 	private String cellphoneNo;
 	private String email;
+
+	public String getAuthLevelName() {
+		return "일반회원";
+	}
+
 }

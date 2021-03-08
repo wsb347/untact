@@ -51,14 +51,13 @@
 		WHERE 1
 		AND id = #{id}
 	</select>
-
+	
 	<select id="getGenFiles" resultType="GenFile">
 		SELECT *
 		FROM genFile
 		WHERE 1
 		AND relTypeCode = #{relTypeCode}
-		AND relId =
-		#{relId}
+		AND relId = #{relId}
 		<if test="typeCode != null">
 			AND typeCode = #{typeCode}
 		</if>
@@ -67,14 +66,14 @@
 		</if>
 		ORDER BY typeCode, type2Code, fileNo
 	</select>
-
-	<select id="getGenFilesByRelTypeCodeAndRelId"
-		resultType="GenFile">
+	
+	<select id="getGenFilesByRelTypeCodeAndRelId" resultType="GenFile">
 		SELECT *
 		FROM genFile
 		WHERE 1
 		AND relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
+		ORDER BY typeCode, type2Code, fileNo
 	</select>
 
 	<select
@@ -90,8 +89,7 @@
 		</foreach>
 		AND relTypeCode = #{relTypeCode}
 		AND typeCode = #{typeCode}
-		AND
-		type2Code = #{type2Code}
+		AND type2Code = #{type2Code}
 		ORDER BY relId, fileNo
 	</select>
 

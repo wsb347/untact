@@ -167,7 +167,7 @@ public class GenFileService {
 		genFileDao.changeRelId(id, relId);
 	}
 
-	public void deleteGenFiles(String relTypeCode, int relId) {
+	public void getGenFilesByRelTypeCodeAndRelId(String relTypeCode, int relId) {
 		List<GenFile> genFiles = genFileDao.getGenFilesByRelTypeCodeAndRelId(relTypeCode, relId);
 
 		for (GenFile genFile : genFiles) {
