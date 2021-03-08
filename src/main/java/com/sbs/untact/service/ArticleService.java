@@ -115,7 +115,7 @@ public class ArticleService {
 		return articles;
 	}
 
-	public Board getBoard(int id) {
+	public Board getBoard(Integer id) {
 		return articleDao.getBoard(id);
 	}
 

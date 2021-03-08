@@ -28,8 +28,9 @@
 		<c:forEach items="${articles}" var="article">
 			<c:set var="detailUrl" value="detail?id=${article.id}" />
 			<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-				<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
-				<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
+			<c:set var="thumbFile"
+				value="${article.extra.file__common__attachment[thumbFileNo]}" />
+			<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 			<div class="flex items-center mt-10">
 				<a href="${detailUrl}" class="font-bold">NO. ${article.id}</a> <a
 					href="${detailUrl}" class="ml-2 font-light text-gray-600">${article.regDate}</a>
@@ -61,8 +62,7 @@
 					<a class="flex items-center"><img
 						src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
 						alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
-						<h1 class="text-gray-700 font-bold">${article.extra_writer}</h1>
-					</a>
+						<h1 class="text-gray-700 font-bold">${article.extra_writer}</h1> </a>
 				</div>
 			</div>
 		</c:forEach>

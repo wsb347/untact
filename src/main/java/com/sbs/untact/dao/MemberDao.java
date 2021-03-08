@@ -24,7 +24,7 @@ public interface MemberDao {
 
 	public List<Member> getMembers();
 
-	public List<Member> getForPrintMembers(@Param(value = "searchKeywordType") String searchKeywordType,
-			@Param(value = "searchKeyword") String searchKeyword, @Param(value = "limitStart") int limitStart,
-			@Param(value = "limitTake") int limitTake);
+	public List<Member> getForPrintMembers(Map<String, Object> param);
+
+	public Member getForPrintMember(@Param(value = "id") int id);
 }

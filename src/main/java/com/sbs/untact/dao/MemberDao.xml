@@ -9,13 +9,16 @@
 		INSERT INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId = #{loginId},
+		loginId =
+		#{loginId},
 		loginPw = #{loginPw},
 		nickname = #{nickname},
-		`name` = #{name},
+		`name` =
+		#{name},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email},
-		authKey = CONCAT('authKey1__', UUID(), '__', RAND())
+		authKey =
+		CONCAT('authKey1__', UUID(), '__', RAND())
 	</insert>
 
 	<!-- public Member getMember(String loginId); -->
@@ -24,13 +27,21 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="getForPrintMember" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE id = #{id}
+	</select>
+
 	<select id="getMemberByLoginId" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE loginId = #{loginId}
 	</select>
 
 	<select id="getMemberByNickname" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE nickname = #{nickname}
 	</select>
 
@@ -62,14 +73,15 @@
 	</update>
 
 	<select id="getMemberByAuthKey" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE authKey = #{authKey}
 	</select>
-	
+
 	<select id="getMembers" resultType="Member">
 		SELECT * FROM `member`
 	</select>
-	
+
 	<select id="getForPrintMembers" resultType="Member">
 		SELECT M.*
 		FROM `member` AS M
@@ -87,10 +99,13 @@
 		<if test="searchKeywordType == 'loginId'">
 			AND M.loginId LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
+		<if test="authLevel != null and authLevel != ''">
+			AND M.authLevel = #{authLevel}
+		</if>
 		ORDER BY M.id DESC
 		<if test="limitStart != null and limitTake != null">
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
-	
+
 </mapper>
