@@ -131,7 +131,7 @@
 					<span>권한레벨</span>
 				</div>
 				<div class="lg:flex-grow">
-					<select class="form-row-input w-full rounded-sm select-auth-level">
+					<select class="form-row-input w-full rounded-sm select-auth-level" name="authLevel" >
 						<option value="3">일반회원</option>
 						<option value="7">관리자</option>
 					</select>

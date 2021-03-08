@@ -85,8 +85,7 @@ public class AdmMemberController extends BaseController {
 		}
 
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		param.put("id", loginedMemberId);
-
+		
 		return memberService.modifyMember(param);
 	}
 
