@@ -50,11 +50,13 @@
 						<i class="fas fa-info"></i> <span class="hidden sm:inline">자세히
 							보기</span>
 				</span>
-				</a> <a href="modify?id=${member.id}"
+				</a> 
+				<a href="modify?id=${member.id}"
 					class="ml-2 text-blue-500 hover:underline"> <span> <i
 						class="fas fa-edit"></i> <span class="hidden sm:inline">수정</span>
 				</span>
-				</a> <a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+				</a> 
+				<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
 					href="doDelete?id=${member.id}"
 					class="ml-2 text-blue-500 hover:underline"> <span> <i
 						class="fas fa-trash"></i> <span class="hidden sm:inline">삭제</span>

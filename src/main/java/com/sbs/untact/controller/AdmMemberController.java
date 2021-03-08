@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Member;
-import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
@@ -58,7 +57,7 @@ public class AdmMemberController extends BaseController {
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
-	
+
 	@RequestMapping("/adm/member/modify")
 	public String showModify(Integer id, HttpServletRequest req) {
 		if (id == null) {
@@ -76,17 +75,15 @@ public class AdmMemberController extends BaseController {
 		return "adm/member/modify";
 	}
 
-
 	@RequestMapping("/adm/member/doModify")
-	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		if (param.isEmpty()) {
-			return new ResultData("F-2", "수정할 정보를 입력해주세요.");
+			return Util.msgAndBack("수정할 정보를 입력해주세요.");
 		}
 
-		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		
-		return memberService.modifyMember(param);
+		memberService.modifyMember(param);
+
+		return msgAndReplace(req, "정보가 수정되었습니다.", "../member/list?authLevel=" + param.get("authLevel"));
 	}
 
 	@RequestMapping("/adm/member/doLogout")

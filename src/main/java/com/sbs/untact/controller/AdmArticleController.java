@@ -111,7 +111,7 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/doDelete")
 	public String doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
@@ -163,29 +163,30 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doModify")
-	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if (id == 0) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return msgAndBack(req, "관리자만 가능합니다");
 		}
+		
+		articleService.modifyArticle(param);
 
-		return articleService.modifyArticle(param);
+		return msgAndReplace(req, String.format("%d번 게시물이 수정되었습니다.", id), "../article/list?boardId=" + article.getBoardId());
 	}
 
 }
