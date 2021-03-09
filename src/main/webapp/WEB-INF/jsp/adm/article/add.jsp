@@ -95,8 +95,26 @@
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-6">
 		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;"
 			action="doAdd" method="POST" enctype="multipart/form-data">
-			<input type="hidden" name="genFileIdsStr" value="" /> <input
-				type="hidden" name="boardId" value="${param.boardId}" />
+			<input type="hidden" name="genFileIdsStr" value="" />
+
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>게시판</span>
+				</div>
+				<div class="lg:flex-grow">
+					<select class="form-row-input w-full rounded-sm select-boardId"
+						name="boardId">
+						<option value="1">공지사항</option>
+						<option value="2">자유게시판</option>
+					</select>
+					<script>
+						const boardId = parseInt("${param.boardId}");
+					</script>
+					<script>
+						$('.section-1 .select-boardId').val(boardId);
+					</script>
+				</div>
+			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>제목</span>

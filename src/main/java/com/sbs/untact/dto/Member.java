@@ -17,7 +17,6 @@ public class Member {
 	private String loginId;
 	@JsonIgnore
 	private String loginPw;
-	@JsonIgnore
 	private int authLevel;
 	@JsonIgnore
 	private String authKey;
@@ -25,6 +24,7 @@ public class Member {
 	private String name;
 	private String cellphoneNo;
 	private String email;
+	private String extra__thumbImg;
 
 	public String getAuthLevelName() {
 		return MemberService.getAuthLevelName(this);

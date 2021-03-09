@@ -42,11 +42,17 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/list")
-	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") Integer boardId,
+	public String showList(HttpServletRequest req, Integer boardId,
 			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") Integer page) {
+
+		if(boardId == null) {
+			articleService.getArticles(searchKeywordType,searchKeyword);
+		}
+		
 		Board board = articleService.getBoard(boardId);
 
 		req.setAttribute("board", board);
+		
 		if (board == null) {
 			return msgAndBack(req, "존재하지않은 게시판입니다.");
 		}

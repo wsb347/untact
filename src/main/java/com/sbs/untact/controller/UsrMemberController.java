@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +21,7 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@RequestMapping("/usr/member/doJoin")
+	@PostMapping("/usr/member/doJoin")
 	@ResponseBody
 	public ResultData doJoin(@RequestParam Map<String, Object> param) {
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
@@ -61,22 +62,22 @@ public class UsrMemberController {
 		return memberService.memberJoin(param);
 	}
 
-	@RequestMapping("/usr/member/memberByAuthKey")
+	@GetMapping("/usr/member/memberByAuthKey")
 	@ResponseBody
 	public ResultData showMemberByAuthKey(String authKey) {
 		if (authKey == null) {
 			return new ResultData("F-1", "authKey를 입력해주세요.");
 		}
 
-		Member existingMember = memberService.getMemberByAuthKey(authKey);
+		Member existingMember = memberService.getForPrintMemberByAuthKey(authKey);
 
 		return new ResultData("T-1", "유요한 회원입니다.", "member", existingMember);
 	}
 
-	@RequestMapping("/usr/member/authKey")
+	@PostMapping("/usr/member/authKey")
 	@ResponseBody
 	public ResultData showAuthKey(String loginId, String loginPw) {
-		Member existingMember = memberService.getMemberByLoginId(loginId);
+		Member existingMember = memberService.getForPrintMemberByAuthKey(loginId);
 
 		if (existingMember == null) {
 			return new ResultData("F-2", String.format("%s (은)는 존재하지않는 아이디입니다.", loginId));
@@ -95,11 +96,10 @@ public class UsrMemberController {
 		}
 
 		return new ResultData("T-1", String.format("%s님 환영합니다.", existingMember.getNickname()), "authKey",
-				existingMember.getAuthKey(), "id", existingMember.getId(), "name", existingMember.getName(), "nickname",
-				existingMember.getNickname());
+				existingMember.getAuthKey(), "member", existingMember);
 	}
 
-	@RequestMapping("/usr/member/doLogin")
+	@PostMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		Member existingMember = memberService.getMemberByLoginId(loginId);
@@ -121,7 +121,7 @@ public class UsrMemberController {
 		return new ResultData("T-1", String.format("%s님 환영합니다.", existingMember.getNickname()));
 	}
 
-	@RequestMapping("/usr/member/doLogout")
+	@PostMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(HttpSession session) {
 		session.removeAttribute("loginedMemberId");
@@ -129,7 +129,7 @@ public class UsrMemberController {
 		return new ResultData("T-1", "로그아웃 되었습니다.");
 	}
 
-	@RequestMapping("/usr/member/doModify")
+	@PostMapping("/usr/member/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		if (param.isEmpty()) {

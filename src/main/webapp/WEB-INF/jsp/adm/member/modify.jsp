@@ -15,23 +15,23 @@
 		if (MemberModify__submited) {
 			return;
 		}
-			form.loginPw.value = form.loginPw.value.trim();
-			if (form.loginPw.value.length == 0) {
-				alert('로그인비번을 입력해주세요.');
-				form.loginPw.focus();
-				return;
-			}
-			if (form.loginPwConfirm.value.length == 0) {
-				alert('로그인비번 확인을 입력해주세요.');
-				form.loginPwConfirm.focus();
-				return;
-			}
-			if (form.loginPw.value != form.loginPwConfirm.value) {
-				alert('로그인비번이 일치하지 않습니다.');
-				form.loginPwConfirm.focus();
-				return;
-			}
-		
+		form.loginPw.value = form.loginPw.value.trim();
+		if (form.loginPw.value.length == 0) {
+			alert('로그인비번을 입력해주세요.');
+			form.loginPw.focus();
+			return;
+		}
+		if (form.loginPwConfirm.value.length == 0) {
+			alert('로그인비번 확인을 입력해주세요.');
+			form.loginPwConfirm.focus();
+			return;
+		}
+		if (form.loginPw.value != form.loginPwConfirm.value) {
+			alert('로그인비번이 일치하지 않습니다.');
+			form.loginPwConfirm.focus();
+			return;
+		}
+
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
 			alert('이름을 입력해주세요.');
@@ -78,7 +78,8 @@
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPw" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호를 입력해주세요." />						
+						class="form-row-input w-full rounded-sm"
+						placeholder="로그인비밀번호를 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -87,7 +88,8 @@
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPwConfirm" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호 확인을 입력해주세요." />						
+						class="form-row-input w-full rounded-sm"
+						placeholder="로그인비밀번호 확인을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -95,8 +97,9 @@
 					<span>이름</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input value="${member.name}" type="text" name="name" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="이름을 입력해주세요." />						
+					<input value="${member.name}" type="text" name="name"
+						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						placeholder="이름을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -104,8 +107,9 @@
 					<span>별명</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input value="${member.nickname}" type="text" name="nickname" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="별명을 입력해주세요." />						
+					<input value="${member.nickname}" type="text" name="nickname"
+						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						placeholder="별명을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -113,8 +117,9 @@
 					<span>이메일</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input value="${member.email}" type="email" name="email" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="이메일을 입력해주세요." />						
+					<input value="${member.email}" type="email" name="email"
+						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						placeholder="이메일을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -122,8 +127,9 @@
 					<span>전화번호</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input value="${member.cellphoneNo}" type="text" name="cellphoneNo" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="전화번호를 입력해주세요." />						
+					<input value="${member.cellphoneNo}" type="text" name="cellphoneNo"
+						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						placeholder="전화번호를 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -131,16 +137,17 @@
 					<span>권한레벨</span>
 				</div>
 				<div class="lg:flex-grow">
-					<select class="form-row-input w-full rounded-sm select-auth-level" name="authLevel" >
+					<select class="form-row-input w-full rounded-sm select-auth-level"
+						name="authLevel">
 						<option value="3">일반회원</option>
 						<option value="7">관리자</option>
 					</select>
 					<script>
-					const memberAuthLevel = parseInt("${member.authLevel}");
+						const memberAuthLevel = parseInt("${member.authLevel}");
 					</script>
 					<script>
 						$('.section-1 .select-auth-level').val(memberAuthLevel);
-					</script>						
+					</script>
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -148,8 +155,8 @@
 					<div class="btns">
 						<input type="submit"
 							class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-							value="수정">
-						<input onclick="history.back();" type="button"
+							value="수정"> <input onclick="history.back();"
+							type="button"
 							class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
 							value="취소">
 					</div>

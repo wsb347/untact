@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +24,7 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/article/detail")
+	@GetMapping("/usr/article/detail")
 	@ResponseBody
 	public ResultData showDetail(Integer id) {
 		Article article = articleService.getForPrintArticle(id);
@@ -35,7 +36,7 @@ public class UsrArticleController {
 		return new ResultData("S-1", "성공하였습니다.", "article", article);
 	}
 
-	@RequestMapping("/usr/article/list")
+	@GetMapping("/usr/article/list")
 	@ResponseBody
 	public ResultData showList(@RequestParam(defaultValue = "1") Integer boardId, String searchKeywordType,
 			String searchKeyword, @RequestParam(defaultValue = "1") Integer page) {
@@ -73,11 +74,11 @@ public class UsrArticleController {
 		return new ResultData("S-1", "성공하였습니다.", "articles", articles);
 	}
 
-	@RequestMapping("/usr/article/doAdd")
+	@PostMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
-		
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
 		param.put("memberId", loginedMemberId);
 
 		if (param.get("title") == null) {
@@ -93,11 +94,11 @@ public class UsrArticleController {
 		return articleService.addArticle(param);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@PostMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
-		
+
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -117,13 +118,13 @@ public class UsrArticleController {
 		return articleService.deleteArticle(id);
 	}
 
-	@RequestMapping("/usr/article/doModify")
+	@PostMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
-		
+
 		int id = Util.getAsInt(param.get("id"), 0);
-		
+
 		if (param.get("id") == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}

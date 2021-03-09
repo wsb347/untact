@@ -55,14 +55,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 로그인 필요
 		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/**").excludePathPatterns("/")
-				.excludePathPatterns("/adm/**").excludePathPatterns("/gen/**").excludePathPatterns("/resource/**")
+				.excludePathPatterns("/swagger-ui/**").excludePathPatterns("/swagger-resources/**")
+				.excludePathPatterns("/v2/api-docs").excludePathPatterns("/webjars/**").excludePathPatterns("/adm/**")
+				.excludePathPatterns("/gen/**").excludePathPatterns("/resource/**")
 				.excludePathPatterns("/usr/home/main").excludePathPatterns("/usr/member/authKey")
 				.excludePathPatterns("/usr/member/login").excludePathPatterns("/usr/member/doLogin")
 				.excludePathPatterns("/usr/member/join").excludePathPatterns("/usr/member/doJoin")
 				.excludePathPatterns("/usr/article/list").excludePathPatterns("/usr/article/detail")
 				.excludePathPatterns("/usr/reply/list").excludePathPatterns("/usr/member/findLoginId")
 				.excludePathPatterns("/usr/member/doFindLoginId").excludePathPatterns("/usr/member/findLoginPw")
-				.excludePathPatterns("/usr/member/doFindLoginPw").excludePathPatterns("/common/genFile/doDownload")
+				.excludePathPatterns("/usr/member/doFindLoginPw").excludePathPatterns("/common/**")
 				.excludePathPatterns("/usr/file/test*").excludePathPatterns("/usr/file/doTest*")
 				.excludePathPatterns("/test/**").excludePathPatterns("/error");
 
