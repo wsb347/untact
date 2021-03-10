@@ -31,6 +31,10 @@
 					if (data.fail) {
 						form.loginId.focus();
 					}
+					else {
+						JoinForm__validLoginId = data.body.loginId;
+						form.loginPw.focus();
+					}
 				}, 'json');
 	}
 
