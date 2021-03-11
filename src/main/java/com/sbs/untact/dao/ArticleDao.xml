@@ -55,7 +55,7 @@
 		ON a.memberId = m.id
 		LEFT JOIN board AS b
 		ON a.boardId = b.id WHERE 1
-		<if test="boardId != null">
+		<if test="boardId != null and boardId != 0">
 			AND boardId = #{boardId}
 		</if>
 		<if test="searchKeywordType == 'title'">

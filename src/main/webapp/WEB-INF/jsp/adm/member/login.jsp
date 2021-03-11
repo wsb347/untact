@@ -68,9 +68,6 @@
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:w-36 md:flex md:items-center">
-						<span>로그인</span>
-					</div>
 					<div class="p-1">
 						<input
 							class="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"

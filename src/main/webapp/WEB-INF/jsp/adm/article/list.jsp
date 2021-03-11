@@ -3,12 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../part/mainLayoutHead.jspf"%>
 <script>
+	if(${board.id == null}){
+		${board.id} == '';
+	}
 	param.boardId = parseInt("${board.id}");
 </script>
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-6">
 		<div class="flex items-center">
 			<select class="py-2 select-board-id">
+				<option value="">전체게시판</option>
 				<option value="1">공지사항</option>
 				<option value="2">자유게시판</option>
 			</select>
@@ -16,10 +20,9 @@
 				$('.section-1 .select-board-id').val(param.boardId);
 
 				$('.section-1 .select-board-id').change(function() {
-					location.href = '?boardId=' + this.value;
+					location.href = '?boardId=' + this.value
 				});
 			</script>
-
 			<div class="flex-grow"></div>
 
 			<a href="add?boardId=${board.id }"

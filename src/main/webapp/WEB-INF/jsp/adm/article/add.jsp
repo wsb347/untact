@@ -15,6 +15,13 @@
 			alert('처리중입니다.');
 			return;
 		}
+		
+		form.boardId.value = form.boardId.value.trim();
+		if (form.boardId.value.length == 0) {
+			alert('게시판 선택해주세요.');
+			form.boardId.focus();
+			return false;
+		}
 
 		form.title.value = form.title.value.trim();
 		if (form.title.value.length == 0) {
@@ -22,6 +29,7 @@
 			form.title.focus();
 			return false;
 		}
+		
 		form.body.value = form.body.value.trim();
 		if (form.body.value.length == 0) {
 			alert('내용을 입력해주세요.');
