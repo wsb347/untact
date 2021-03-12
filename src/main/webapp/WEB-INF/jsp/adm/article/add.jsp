@@ -120,6 +120,9 @@
 					</script>
 					<script>
 						$('.section-1 .select-boardId').val(boardId);
+						if(boardId == ''){
+							${param.boardId} == '1';
+						}
 					</script>
 				</div>
 			</div>

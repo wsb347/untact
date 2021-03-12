@@ -42,52 +42,48 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/list")
-	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "0") Integer boardId, String searchKeywordType, String searchKeyword,
+	public String showList(HttpServletRequest req, Integer boardId, String searchKeywordType, String searchKeyword,
 			@RequestParam(defaultValue = "1") Integer page) {
 
-		int itemsInAPage = 10;
-
-		if (boardId == 0) {			
-			List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
-					itemsInAPage);
-			
-			req.setAttribute("articles", articles);
-		} else {
-
-			Board board = articleService.getBoard(boardId);
-
-			req.setAttribute("board", board);
-
-			if (board == null) {
-				return msgAndBack(req, "존재하지않은 게시판입니다.");
-			}
-
-			List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
-					itemsInAPage);
-
-			req.setAttribute("articles", articles);
+		Board board = articleService.getBoard(boardId);
+		
+		if(boardId == null) {
+			boardId = -1;
 		}
+
+		else if (board == null) {
+			return msgAndBack(req, "존재하지않은 게시판입니다.");
+		}
+
+		req.setAttribute("board", board);
 		
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
-		
+
 		if (searchKeywordType == null || searchKeywordType.length() == 0) {
 			searchKeywordType = "titleAndBody";
 		}
-		
+
 		if (searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
 		}
-		
+
 		if (searchKeyword != null) {
 			searchKeyword = searchKeyword.trim();
 		}
-		
+
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
+
+		int itemsInAPage = 10;
+
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
+				itemsInAPage);
 		
+		req.setAttribute("articles", articles);
+
 		return "adm/article/list";
 	}
 

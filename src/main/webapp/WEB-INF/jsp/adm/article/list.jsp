@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../part/mainLayoutHead.jspf"%>
 <script>
-	if(${board.id == null}){
+	if(${board.id == 0}){
 		${board.id} == '';
 	}
 	param.boardId = parseInt("${board.id}");

@@ -55,7 +55,7 @@
 		ON a.memberId = m.id
 		LEFT JOIN board AS b
 		ON a.boardId = b.id WHERE 1
-		<if test="boardId != null and boardId != 0">
+		<if test="boardId != null and boardId != -1">
 			AND boardId = #{boardId}
 		</if>
 		<if test="searchKeywordType == 'title'">
@@ -72,7 +72,6 @@
 		<if test="limitStart != null and limitTake != null">
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
-
 	</select>
 
 	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
