@@ -46,8 +46,8 @@ public class AdmArticleController extends BaseController {
 			@RequestParam(defaultValue = "1") Integer page) {
 
 		Board board = articleService.getBoard(boardId);
-		
-		if(boardId == null) {
+
+		if (boardId == null) {
 			boardId = -1;
 		}
 
@@ -56,7 +56,7 @@ public class AdmArticleController extends BaseController {
 		}
 
 		req.setAttribute("board", board);
-		
+
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -77,13 +77,35 @@ public class AdmArticleController extends BaseController {
 			searchKeywordType = null;
 		}
 
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
+
+		System.out.println("총 게시물 갯수 : " + totalItemsCount);
+
 		int itemsInAPage = 10;
+		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsInAPage);
+		int pageMenuArmSize = 5;
+		int pageMenuStart = page - pageMenuArmSize;
+
+		if (pageMenuStart < 1) {
+			pageMenuStart = 1;
+		}
+
+		int pageMenuEnd = page + pageMenuArmSize;
+		if (pageMenuEnd > totalPage) {
+			pageMenuEnd = totalPage;
+		}
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
-		
-		req.setAttribute("articles", articles);
 
+		req.setAttribute("totalItemsCount", totalItemsCount);
+		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("page", page);
+		req.setAttribute("articles", articles);
+		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
+		req.setAttribute("pageMenuStart", pageMenuStart);
+		req.setAttribute("pageMenuEnd", pageMenuEnd);
+		
 		return "adm/article/list";
 	}
 

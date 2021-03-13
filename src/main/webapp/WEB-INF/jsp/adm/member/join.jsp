@@ -30,8 +30,7 @@
 									+ "</span>");
 					if (data.fail) {
 						form.loginId.focus();
-					}
-					else {
+					} else {
 						JoinForm__validLoginId = data.body.loginId;
 						form.loginPw.focus();
 					}
@@ -93,8 +92,40 @@
 			form.email.focus();
 			return;
 		}
-		form.submit();
-		JoinForm__checkAndSubmitDone = true;
+		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+		if (form.cellphoneNo.value.length == 0) {
+			alert('휴대전화번호를 입력해주세요.');
+			form.cellphoneNo.focus();
+			return;
+		}
+		const submitForm = function(data) {
+			if (data) {
+				form.genFileIdsStr.value = data.body.genFileIdsStr;
+			}
+			form.submit();
+			JoinForm__checkAndSubmitDone = true;
+		}
+		function startUpload(onSuccess) {
+			if (!form.file__member__0__common__attachment__1.value) {
+				onSuccess();
+				return;
+			}
+			const formData = new FormData(form);
+			$.ajax({
+				url : '/common/genFile/doUpload',
+				data : formData,
+				processData : false,
+				contentType : false,
+				dataType : "json",
+				type : 'POST',
+				success : onSuccess
+			});
+			// 파일을 업로드 한 후
+			// 기다린다.
+			// 응답을 받는다.
+			// onSuccess를 실행한다.
+		}
+		startUpload(submitForm);
 	}
 
 	$(function() {
@@ -120,6 +151,7 @@
 					class="formLogin bg-white shadow-md rounded container mx-auto p-8 mt-6"
 					action="doJoin" method="POST" enctype="multipart/form-data"
 					onsubmit="JoinForm__checkAndSubmit(this); return false;">
+					<input type="hidden" name="genFileIdsStr" />
 					<div class="form-row flex flex-col lg:flex-row">
 						<div class="lg:flex lg:items-center lg:w-28">
 							<span>아이디</span>
@@ -148,6 +180,17 @@
 						</div>
 						<div class="lg:flex-grow">
 							<input type="password" name="loginPwConfirm"
+								autofocus="autofocus" class="form-row-input w-full rounded-sm"
+								placeholder="비밀번호를 입력해주세요." />
+						</div>
+					</div>
+					<div class="form-row flex flex-col lg:flex-row">
+						<div class="lg:flex lg:items-center lg:w-28">
+							<span>프로필이미지</span>
+						</div>
+						<div class="lg:flex-grow">
+							<input accept="image/x-png,image/gif,image/jpeg" type="file"
+								name="file__member__0__common__attachment__1"
 								autofocus="autofocus" class="form-row-input w-full rounded-sm"
 								placeholder="비밀번호를 입력해주세요." />
 						</div>

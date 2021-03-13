@@ -47,6 +47,25 @@
 		</if>
 		ORDER BY id DESC
 	</select>
+	
+	<select id="getArticlesTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+		WHERE 1
+		<if test="boardId != null and boardId != -1">
+			AND boardId = #{boardId}
+		</if>
+		<if test="searchKeywordType == 'title'">
+			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND `body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+	</select>
 
 	<select id="getForPrintArticles" resultType="Article">
 		SELECT a.*, IFNULL(m.nickname, "탈퇴회원")extra_writer, 
