@@ -19,6 +19,7 @@ import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.service.BoardService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.util.Util;
 
@@ -28,6 +29,8 @@ public class AdmArticleController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private GenFileService genFileService;
+	@Autowired
+	private BoardService boardService;
 
 	@RequestMapping("/adm/article/detail")
 	@ResponseBody
@@ -45,13 +48,11 @@ public class AdmArticleController extends BaseController {
 	public String showList(HttpServletRequest req, Integer boardId, String searchKeywordType, String searchKeyword,
 			@RequestParam(defaultValue = "1") Integer page) {
 
-		Board board = articleService.getBoard(boardId);
-
-		if (boardId == null) {
+		Board board = boardService.getBoard(boardId);
+		
+		if(boardId == null) {
 			boardId = -1;
-		}
-
-		else if (board == null) {
+		} else if (board == null) {
 			return msgAndBack(req, "존재하지않은 게시판입니다.");
 		}
 
@@ -105,7 +106,7 @@ public class AdmArticleController extends BaseController {
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
 		req.setAttribute("pageMenuStart", pageMenuStart);
 		req.setAttribute("pageMenuEnd", pageMenuEnd);
-		
+
 		return "adm/article/list";
 	}
 

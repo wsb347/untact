@@ -29,8 +29,6 @@ public interface ArticleDao {
 			@Param(value = "searchKeyword") String searchKeyword, @Param(value = "limitStart") int limitStart,
 			@Param(value = "limitTake") int limitTake);
 
-	Board getBoard(@Param(value = "id") Integer id);
-
 	int getArticlesTotalCount(@Param(value = "boardId") Integer boardId,
 			@Param(value = "searchKeywordType") String searchKeywordType,
 			@Param(value = "searchKeyword") String searchKeyword);

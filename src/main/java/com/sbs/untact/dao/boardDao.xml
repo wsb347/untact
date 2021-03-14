@@ -7,7 +7,9 @@
 	<select id="getBoard" resultType="Board">
 		SELECT *
 		FROM board
-		WHERE id = #{id}
+		<if test="id != -1">
+			WHERE id = #{id}		
+		</if>
 	</select>
 
 	<select id="getForPrintBoards" resultType="Board">
@@ -23,26 +25,26 @@
 			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			code LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
-		ORDER BY id DESC
-		
+		ORDER BY id DESC	
+	</select>
+	
+	<select id="getForPrintBoard" resultType="Board">
+		SELECT * FROM board
+		WHERE 1
+		AND id = #{id};
 	</select>
 
-	<delete id="deleteArticle">
-		DELETE FROM article
+	<delete id="deleteBoard">
+		DELETE FROM board
 		WHERE id = #{id}
 	</delete>
 
-	<update id="modifyArticle">
-		UPDATE article
+	<update id="modifyBoard">
+		UPDATE board
 		<set>
-			<if test="title != null or body != null">
+			<if test="name != null">
 				updateDate = NOW(),
-			</if>
-			<if test="title != null">
-				title = #{title},
-			</if>
-			<if test="body != null">
-				`body` = #{body},
+				name = #{name},
 			</if>
 		</set>
 		WHERE id = #{id}

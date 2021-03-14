@@ -17,12 +17,15 @@ import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.service.BoardService;
 import com.sbs.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private BoardService boardService;
 
 	@GetMapping("/usr/article/detail")
 	@ResponseBody
@@ -40,7 +43,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData showList(@RequestParam(defaultValue = "1") Integer boardId, String searchKeywordType,
 			String searchKeyword, @RequestParam(defaultValue = "1") Integer page) {
-		Board board = articleService.getBoard(boardId);
+		Board board = boardService.getBoard(boardId);
 
 		if (board == null) {
 			return new ResultData("F-1", "실패하였습니다.", "msg", "해당 게시판이 없습니다.");
