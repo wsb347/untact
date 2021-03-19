@@ -47,7 +47,7 @@
 			<div class="flex items-center mt-10">
 				<a href="${detailUrl}" class="font-bold">NO. ${article.id}</a> <a href="${detailUrl}" class="ml-2 font-light text-gray-600">${article.regDate}</a>
 				<div class="flex-grow"></div>
-				<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded px-3 hover:bg-gray-500">${article.extra_boardName}</a>
+				<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded px-3 hover:bg-gray-500">${article.extra__boardName}</a>
 
 			</div>
 			<div class="mt-2">
@@ -63,7 +63,7 @@
 				<div class="flex-grow"></div>
 				<div>
 					<a class="flex items-center"><img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
-						<h1 class="text-gray-700 font-bold">${article.extra_writer}</h1> </a>
+						<h1 class="text-gray-700 font-bold">${article.extra__writer}</h1> </a>
 				</div>
 			</div>
 		</c:forEach>
@@ -83,7 +83,7 @@
 				<a href="${Util.getNewUrl(requestUrl, 'page', i)}" class="${aClassStr}">${i}</a>
 			</c:forEach>
 			<c:if test="${page != totalPage}">
-				<a href="?${Util.getNewUrl(requestUrl, 'page', totalPage)}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"> <span class="sr-only">Next</span> <i class="fas fa-chevron-right"></i>
+				<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"> <span class="sr-only">Next</span> <i class="fas fa-chevron-right"></i>
 				</a>
 			</c:if>
 		</nav>

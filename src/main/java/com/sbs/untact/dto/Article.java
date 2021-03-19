@@ -1,8 +1,5 @@
 package com.sbs.untact.dto;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Article {
+public class Article extends EntityDto {
 	private int id;
 	private int boardId;
 	private String regDate;
@@ -19,18 +16,12 @@ public class Article {
 	private String title;
 	private String body;
 	
-	private String extra_writer;
-	private String extra_boardName;
+	private String extra__writer;
+	private String extra__boardName;
 	private String extra__thumbImg;
 	
-	private Map<String, Object> extra;
-
-	public Map<String, Object> getExtraNotNull() {
-		if ( extra == null ) {
-			extra = new HashMap<String, Object>();
-		}
-
-		return extra;
+	public String getWriterThumbImgUrl() {
+		return "/common/genFile/file/member/" + memberId + "/common/attachment/1";
 	}
 
 }

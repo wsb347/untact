@@ -33,15 +33,26 @@ public class AdmArticleController extends BaseController {
 	private BoardService boardService;
 
 	@RequestMapping("/adm/article/detail")
-	@ResponseBody
-	public ResultData showDetail(Integer id) {
+	public String showDetail(HttpServletRequest req, Integer id) {
 		Article article = articleService.getForPrintArticle(id);
 
-		if (article == null) {
-			return new ResultData("F-2", "존재하지 않는 번호입니다.");
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
 		}
 
-		return new ResultData("S-1", "성공하였습니다.", "article", article);
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("article", article);
+		
+		if (article == null) {
+			return msgAndBack(req, "존재하지 않는 번호입니다.");
+		}
+
+		return "adm/article/detail";
+
 	}
 
 	@RequestMapping("/adm/article/list")
