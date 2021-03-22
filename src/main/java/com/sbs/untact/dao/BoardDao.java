@@ -21,4 +21,6 @@ public interface BoardDao {
 
 	Board getBoard(@RequestParam(value = "id") Integer id);
 
+	Board getMemberByName(@RequestParam(value = "name") String name);
+
 }

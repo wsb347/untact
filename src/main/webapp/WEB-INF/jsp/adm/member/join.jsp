@@ -106,11 +106,12 @@
 			JoinForm__checkAndSubmitDone = true;
 		}
 		function startUpload(onSuccess) {
+			const formData = new FormData(form);
 			if (!form.file__member__0__common__attachment__1.value) {
 				onSuccess();
 				return;
 			}
-			const formData = new FormData(form);
+		
 			$.ajax({
 				url : '/common/genFile/doUpload',
 				data : formData,
@@ -191,9 +192,9 @@
 						<div class="lg:flex-grow">
 							<input accept="image/x-png,image/gif,image/jpeg" type="file"
 								name="file__member__0__common__attachment__1"
-								autofocus="autofocus" class="form-row-input w-full rounded-sm"
-								placeholder="비밀번호를 입력해주세요." />
+								autofocus="autofocus" class="form-row-input w-full rounded-sm" />
 						</div>
+						
 					</div>
 					<div class="form-row flex flex-col lg:flex-row">
 						<div class="lg:flex lg:items-center lg:w-28">

@@ -28,6 +28,10 @@ public class Member extends EntityDto {
 	private String email;
 	private String extra__thumbImg;
 
+	public String getWriterThumbImgUrl() {
+		return "/common/genFile/file/member/" + id + "/common/attachment/1";
+	}
+	
 	public String getAuthLevelName() {
 		return MemberService.getAuthLevelName(this);
 	}

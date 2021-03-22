@@ -8,8 +8,15 @@
 		SELECT *
 		FROM board
 		<if test="id != -1">
-			WHERE id = #{id}		
+			WHERE id = #{id}
 		</if>
+	</select>
+
+	<select id="getMemberByName" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE
+		name = #{name}
 	</select>
 
 	<select id="getForPrintBoards" resultType="Board">
@@ -23,11 +30,12 @@
 		</if>
 		<if test="searchKeywordType == 'nameAndCode'">
 			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			code LIKE CONCAT('%', #{searchKeyword}, '%'))
+			code
+			LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
-		ORDER BY id DESC	
+		ORDER BY id DESC
 	</select>
-	
+
 	<select id="getForPrintBoard" resultType="Board">
 		SELECT * FROM board
 		WHERE 1

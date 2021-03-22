@@ -110,5 +110,9 @@
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
+	
+	<delete id="deleteMember">
+		DELETE FROM `member` WHERE id = #{id}
+	</delete>
 
 </mapper>

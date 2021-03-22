@@ -31,7 +31,7 @@ public class BoardService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		return new ResultData("S-1", "게시물을 수정하였습니다.", "id", id);
+		return new ResultData("S-1", "게시판을 수정하였습니다.", "id", id);
 
 	}
 
@@ -41,5 +41,9 @@ public class BoardService {
 
 	public Board getBoard(Integer id) {
 		return boardDao.getBoard(id);
+	}
+
+	public Board getMemberByName(String name) {
+		return boardDao.getMemberByName(name);
 	}
 }

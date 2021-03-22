@@ -78,6 +78,13 @@
 				</span> <input type="search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
 			</div>
 		</div>
+		<div class="form-row flex flex-col lg:flex-row mt-5">
+			<div class="lg:flex-grow">
+				<div class="btns">
+					<input onclick="history.back(); return false;" type="button" class="btn-info bg-blue-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="목록">
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 

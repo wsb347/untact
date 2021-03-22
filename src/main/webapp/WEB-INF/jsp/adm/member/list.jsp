@@ -65,7 +65,7 @@
 				<div class="flex-grow"></div>
 				<div>
 					<a class="flex items-center"> <img
-						src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
+						src="${member.writerThumbImgUrl}"
 						alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
 						<h1 class="text-gray-700 font-bold hover:underline">${member.nickname}</h1>
 					</a>

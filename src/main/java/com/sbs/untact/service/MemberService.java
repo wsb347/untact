@@ -127,5 +127,13 @@ public class MemberService {
 		return member;
 	}
 
+	public ResultData deleteMember(Integer id) {
+		memberDao.deleteMember(id);
+
+		genFileService.getGenFilesByRelTypeCodeAndRelId("member", id);
+
+		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+
 
 }

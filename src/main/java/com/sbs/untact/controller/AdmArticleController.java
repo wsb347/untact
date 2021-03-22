@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
@@ -46,7 +45,7 @@ public class AdmArticleController extends BaseController {
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
-		
+
 		if (article == null) {
 			return msgAndBack(req, "존재하지 않는 번호입니다.");
 		}
@@ -60,8 +59,8 @@ public class AdmArticleController extends BaseController {
 			@RequestParam(defaultValue = "1") Integer page) {
 
 		Board board = boardService.getBoard(boardId);
-		
-		if(boardId == null) {
+
+		if (boardId == null) {
 			boardId = -1;
 		} else if (board == null) {
 			return msgAndBack(req, "존재하지않은 게시판입니다.");

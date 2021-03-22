@@ -10,21 +10,23 @@ import com.sbs.untact.dto.Member;
 
 @Mapper
 public interface MemberDao {
-	public void memberJoin(Map<String, Object> param);
+	void memberJoin(Map<String, Object> param);
 
-	public Member getMember(@Param(value = "id") int id);
+	Member getMember(@Param(value = "id") int id);
 
-	public Member getMemberByLoginId(@Param(value = "loginId") String loginId);
+	Member getMemberByLoginId(@Param(value = "loginId") String loginId);
 
-	public Member getMemberByNickname(@Param(value = "nickname") String nickname);
+	Member getMemberByNickname(@Param(value = "nickname") String nickname);
 
-	public void modifyMember(Map<String, Object> param);
+	void modifyMember(Map<String, Object> param);
 
-	public Member getMemberByAuthKey(@Param(value = "authKey") String authKey);
+	Member getMemberByAuthKey(@Param(value = "authKey") String authKey);
 
-	public List<Member> getMembers();
+	List<Member> getMembers();
 
-	public List<Member> getForPrintMembers(Map<String, Object> param);
+	List<Member> getForPrintMembers(Map<String, Object> param);
 
-	public Member getForPrintMember(@Param(value = "id") int id);
+	Member getForPrintMember(@Param(value = "id") int id);
+
+	void deleteMember(@Param(value = "id") Integer id);
 }

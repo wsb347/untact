@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
@@ -26,6 +27,29 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+	
+	@RequestMapping("/adm/member/detail")
+	public String showDetail(HttpServletRequest req, Integer id) {
+		Member member = memberService.getForPrintMember(id);
+
+		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		member.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("member", member);
+		
+		if (member == null) {
+			return msgAndBack(req, "존재하지 않는 번호입니다.");
+		}
+
+		return "adm/member/detail";
+
+	}
 
 	@RequestMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
@@ -229,4 +253,29 @@ public class AdmMemberController extends BaseController {
 		return "adm/member/list";
 	}
 
+	@RequestMapping("/adm/member/doDelete")
+	public String doDelete(Integer id, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Member member = memberService.getMember(id);
+
+		if (member == null) {
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+		}
+
+		boolean actorCanDeleteRd = memberService.isAdmin(loginedMember);
+
+		if (!actorCanDeleteRd) {
+			return msgAndBack(req, "관리자만 가능합니다");
+		}
+
+		memberService.deleteMember(id);
+
+		return msgAndReplace(req, String.format("%d번 회원이 삭제되었습니다.", id), "../member/list");
+	}
+	
 }

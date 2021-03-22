@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.BoardService;
 import com.sbs.untact.util.Util;
 
@@ -19,6 +20,31 @@ import com.sbs.untact.util.Util;
 public class AdmBoardController extends BaseController {
 	@Autowired
 	private BoardService boardService;
+	
+	@RequestMapping("/adm/board/getNameDup")
+	@ResponseBody
+	public ResultData getNameDup(String name) {
+		
+		if(name == null) {
+			return new ResultData("F-1", "name를 입력해주세요.");
+		}
+		
+		if (Util.allNumberString(name)) {
+			return new ResultData("F-3", "게시판이름은 숫자만으로 구성될 수 없습니다.");
+		}
+
+		if (name.length() > 20) {
+			return new ResultData("F-6", "이름은 20자 이하로 입력해주세요.");
+		}
+
+		Board existingBoard = boardService.getMemberByName(name);
+
+		if (existingBoard != null) {
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 이름 입니다.", name));
+		}
+		
+		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 이입니다.", name), "name", name);
+	}
 	
 	@RequestMapping("/adm/board/list")
 	public String showList(HttpServletRequest req,
@@ -73,11 +99,14 @@ public class AdmBoardController extends BaseController {
 
 	@RequestMapping("/adm/board/doModify")
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		if (id == 0) {
-			return msgAndBack(req, "id를 입력해주세요.");
+		if (param.get("name") == null) {
+			return msgAndBack(req, "name를 입력해주세요.");
 		}
+		
+		System.out.println("id : " + param.get("id"));
 
 		Board board = boardService.getBoard(id);
 
@@ -87,8 +116,8 @@ public class AdmBoardController extends BaseController {
 
 		boardService.modifyBoard(param);
 
-		return msgAndReplace(req, String.format("%s 게시물이 수정되었습니다.", param.get("name")),
-				"../board/list?id=" + id);
+		return msgAndReplace(req, id + "번 게시물이 수정되었습니다.",
+				"../board/list");
 	}
 
 }

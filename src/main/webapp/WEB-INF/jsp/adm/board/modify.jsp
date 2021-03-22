@@ -7,14 +7,14 @@
 <script>
 	const ModifyForm__checkAndSubmitDone = false;
 	let ModifyForm__validName= '';
-	// 로그인 아이디 중복체크 함수
-	function JoinForm__checkLoginIdDup() {
+	// 이름 중복체크 함수
+	function ModifyForm__checkLoginIdDup() {
 		const form = $('.name').get(0);
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
 			return;
 		}
-		$.get('getLoginIdDup', {
+		$.get('getNameDup', {
 			name : form.name.value
 		},
 				function(data) {
@@ -23,13 +23,13 @@
 						colorClass = 'text-red-500';
 					}
 
-					$('.loginIdInputMsg').html(
+					$('.nameInputMsg').html(
 							"<span class='" + colorClass + "'>" + data.msg
 									+ "</span>");
 					if (data.fail) {
 						form.name.focus();
 					} else {
-						JoinForm__validLoginId = data.body.name;
+						ModifyForm__validName = data.body.name;
 						form.name.focus();
 					}
 				}, 'json');
@@ -44,17 +44,21 @@
 
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
-			alert('제목을 입력해주세요.');
-			form.title.focus();
+			alert('이름을 입력해주세요.');
+			form.name.focus();
 
 			return false;
 		}
+		
+		form.submit();
+		BoardModify__submited = true;
 	}
 </script>
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<form onsubmit="BoardModify__checkAndSubmit(this); return false;" action="doModify" method="POST" enctype="multipart/form-data">
+			<input type="hidden" name="id" class="form-row-input w-full rounded-sm" value="${board.id}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>코드</span>
@@ -70,6 +74,7 @@
 				<div class="lg:flex-grow">
 					<input type="text" name="name" class="form-row-input w-full rounded-sm" placeholder="이름을 입력해주세요." value="${board.name}" />
 				</div>
+				<div class="nameInputMsg"></div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex-grow">
