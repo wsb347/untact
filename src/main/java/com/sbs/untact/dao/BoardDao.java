@@ -23,4 +23,8 @@ public interface BoardDao {
 
 	Board getMemberByName(@RequestParam(value = "name") String name);
 
+	Board getMemberByCode(@RequestParam(value = "code") String code);
+
+	void addBoard(Map<String, Object> param);
+
 }

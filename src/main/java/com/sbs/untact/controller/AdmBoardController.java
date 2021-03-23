@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
@@ -43,7 +44,7 @@ public class AdmBoardController extends BaseController {
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 이름 입니다.", name));
 		}
 		
-		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 이입니다.", name), "name", name);
+		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 이름입니다.", name));
 	}
 	
 	@RequestMapping("/adm/board/list")
@@ -120,4 +121,44 @@ public class AdmBoardController extends BaseController {
 				"../board/list");
 	}
 
+	@RequestMapping("/adm/board/add")
+	public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		return "adm/board/add";
+	}
+
+	@RequestMapping("/adm/board/doAdd")
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			MultipartRequest multipartRequest) {
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		if (param.get("code") == null) {
+			return msgAndBack(req, "code을 입력해주세요.");
+		}
+
+		if (param.get("name") == null) {
+			return msgAndBack(req, "name를 입력해주세요.");
+		}
+		
+		Board existingBoardByCode = boardService.getMemberByCode((String)param.get("code"));
+		
+		if (existingBoardByCode != null) {
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 코드 입니다.", (String)param.get("code")));
+		}
+
+		Board existingBoardByName = boardService.getMemberByName((String)param.get("name"));
+
+		if (existingBoardByName != null) {
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 이름 입니다.", (String)param.get("name")));
+		}
+
+		param.put("memberId", loginedMemberId);
+
+		boardService.addboard(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return msgAndReplace(req, String.format("%d번 게시판이 작성되었습니다.", id),
+				"../board/list");
+	}
+	
 }

@@ -46,4 +46,16 @@ public class BoardService {
 	public Board getMemberByName(String name) {
 		return boardDao.getMemberByName(name);
 	}
+
+	public Board getMemberByCode(String code) {
+		return boardDao.getMemberByName(code);
+	}
+	
+	public ResultData addboard(Map<String, Object> param) {
+		boardDao.addBoard(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return new ResultData("S-1", "성공하였습니다.", "id", id);
+	}
 }

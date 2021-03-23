@@ -16,8 +16,7 @@
 				<div class="flex flex-col mb-2 ml-4 mt-1">
 					<div class="text-gray-600 text-sm font-semibold">${article.extra__writer}</div>
 					<div class="flex w-full mt-1">
-						<a href="?boardId=${param.boardId}" class="text-blue-700 font-base text-xs mr-1 cursor-pointer"> ${article.extra__boardName} </router-link>
-							<div class="text-gray-400 font-thin text-xs">${article.regDate}</div>
+						<div class="text-gray-400 font-thin text-xs">${article.regDate}</div>
 					</div>
 				</div>
 			</div>

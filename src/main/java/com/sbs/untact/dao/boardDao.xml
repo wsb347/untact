@@ -18,6 +18,13 @@
 		WHERE
 		name = #{name}
 	</select>
+	
+	<select id="getMemberByCode" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE
+		code = #{code}
+	</select>
 
 	<select id="getForPrintBoards" resultType="Board">
 		SELECT * FROM board
@@ -57,6 +64,14 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<insert id="addBoard"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO board
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		code = #{code},
+		name = #{name}
+	</insert>
 
 </mapper>
 
