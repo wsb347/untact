@@ -71,7 +71,7 @@ public class AdmBoardController extends BaseController {
 			searchKeywordType = null;
 		}
 
-		int itemsInAPage = 20;
+		int itemsInAPage = 10;
 
 		List<Board> boards = boardService.getForPrintBoards(searchKeywordType, searchKeyword, page,
 				itemsInAPage);
