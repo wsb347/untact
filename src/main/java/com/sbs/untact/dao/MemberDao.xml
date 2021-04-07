@@ -9,16 +9,13 @@
 		INSERT INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId =
-		#{loginId},
+		loginId = #{loginId},
 		loginPw = #{loginPw},
 		nickname = #{nickname},
-		`name` =
-		#{name},
+		`name` = #{name},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email},
-		authKey =
-		CONCAT('authKey1__', UUID(), '__', RAND())
+		authKey = CONCAT('authKey1__', UUID(), '__', RAND())
 	</insert>
 
 	<!-- public Member getMember(String loginId); -->
@@ -28,21 +25,23 @@
 	</select>
 
 	<select id="getForPrintMember" resultType="Member">
-		SELECT *
-		FROM `member`
+		SELECT * FROM `member`
 		WHERE id = #{id}
 	</select>
 
 	<select id="getMemberByLoginId" resultType="Member">
-		SELECT * FROM
-		`member`
+		SELECT * FROM `member`
 		WHERE loginId = #{loginId}
 	</select>
 
 	<select id="getMemberByNickname" resultType="Member">
-		SELECT * FROM
-		`member`
+		SELECT * FROM `member`
 		WHERE nickname = #{nickname}
+	</select>
+
+	<select id="getMemberByAuthLevel" resultType="Member">
+		SELECT * FROM `member`
+		WHERE authLevel = #{authLevel}
 	</select>
 
 	<!-- public void modifyMember(Map<String, Object> param); -->
@@ -76,8 +75,7 @@
 	</update>
 
 	<select id="getMemberByAuthKey" resultType="Member">
-		SELECT * FROM
-		`member`
+		SELECT * FROM `member`
 		WHERE authKey = #{authKey}
 	</select>
 
@@ -111,6 +109,18 @@
 		</if>
 	</select>
 	
+	<select id="getMemberTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM `member`
+		WHERE 1
+		<if test="searchKeywordType == 'nickname'">
+			AND nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'loginId'">
+			AND `loginId` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+	</select>
+
 	<delete id="deleteMember">
 		DELETE FROM `member` WHERE id = #{id}
 	</delete>

@@ -84,7 +84,7 @@ public class MemberService {
 		return memberDao.getMembers();
 	}
 
-	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
+	public List<Member> getForPrintMembers(Integer authLevel, String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
 			Map<String, Object> param) {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
@@ -134,6 +134,14 @@ public class MemberService {
 
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
 	}
+
+	public Member getMemberByAuthLevel(Integer authLevel) {
+		return memberDao.getMemberByAuthLevel(authLevel);
+	}
+
+	public int getMemberTotalCount(Integer authLevel, String searchKeywordType, String searchKeyword) {
+		return memberDao.getMemberTotalCount(authLevel,searchKeywordType,searchKeyword);
+		}
 
 
 }
