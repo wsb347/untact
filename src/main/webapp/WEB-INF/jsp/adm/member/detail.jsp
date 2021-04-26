@@ -63,7 +63,7 @@
 		<div class="form-row flex flex-col lg:flex-row mt-5">
 			<div class="lg:flex-grow">
 				<div class="btns">
-					<input onclick="history.back();" type="button" class="btn-info bg-blue-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="목록">
+					<input onclick="history.back();" type="button" class="btn-info bg-blue-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" value="목록">
 				</div>
 			</div>
 		</div>

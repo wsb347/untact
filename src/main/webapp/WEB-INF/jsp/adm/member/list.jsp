@@ -28,7 +28,7 @@
 				<option value="nickname">닉네임</option>
 				<option value="loginId">아이디</option>
 			</select>
-			<input class="ml-3 shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" /> <input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
+			<input class="ml-3 shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" /> <input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
 			<script>
 				if ( param.searchKeywordType ) {
 					$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);

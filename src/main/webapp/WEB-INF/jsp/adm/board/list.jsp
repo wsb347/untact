@@ -11,7 +11,7 @@
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="flex items-center">
 			<div class="flex-grow"></div>
-			<a href="add" class="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-3 rounded">게시판 생성</a>
+			<a href="add" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded">게시판 생성</a>
 		</div>
 		<c:forEach items="${boards}" var="board">
 			<c:set var="detailUrl" value="detail?id=${board.id}" />

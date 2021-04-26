@@ -240,10 +240,10 @@
 						<div class="lg:flex-grow">
 							<div class="btns">
 								<input type="submit"
-									class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+									class="btn-primary bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
 									value="가입"> <input onclick="history.back();"
 									type="button"
-									class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
+									class="btn-info bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
 									value="취소">
 							</div>
 						</div>

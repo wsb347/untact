@@ -70,10 +70,10 @@
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1">
 						<input
-							class="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+							class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="로그인" /> 
 								<a href="join"
-							class="bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+							class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
 							type="submit">회원가입</a> 
 					</div>
 				</div>
