@@ -11,34 +11,21 @@
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div>총 게시물 수 : ${Util.numberFormat(totalItemsCount)}개</div>
-		<div class="flex items-center">
-			<select class="py-2 select-board-id">
-				<option value="">전체게시판</option>
-				<option value="1">공지사항</option>
-				<option value="2">자유게시판</option>
-			</select>
-			<script>
-				$('.section-1 .select-board-id').val(param.boardId);
-
-				$('.section-1 .select-board-id').change(function() {
-					location.href = '?boardId=' + this.value
-				});
-			</script>
-			<div class="flex-grow"></div>
-			<a href="add?boardId=${board.id }" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded">글쓰기</a>
-		</div>
+		
 		<form class="flex mt-3">
 			<select name="searchKeywordType">
 				<option value="titleAndBody">전체</option>
 				<option value="title">제목</option>
 				<option value="body">본문</option>
-			</select> <input class="ml-3 shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" /> <input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
+			</select> <input class="ml-3 shadow appearance-none border rounded w-full py-2 px-5 text-grey-darker" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" /> <input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
 			<script>
 				if ( param.searchKeywordType ) {
 					$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);
 				}
 			</script>
+			<a href="add?boardId=${board.id }" class="bg-blue-500 hover:bg-blue-600 text-white text-center font-bold py-2 px-4 w-1/12 mx-3 rounded">글쓰기</a>
 		</form>
+		
 		<c:forEach items="${articles}" var="article">
 			<c:set var="detailUrl" value="detail?id=${article.id}" />
 			<c:set var="thumbFileNo" value="${String.valueOf(1)}" />

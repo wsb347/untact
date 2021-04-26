@@ -113,7 +113,9 @@
 					<select class="form-row-input w-full rounded-sm select-boardId"
 						name="boardId">
 						<option value="1">공지사항</option>
-						<option value="2">자유게시판</option>
+						<option value="2">자유 게시판</option>
+						<option value="3">신고 게시판</option>
+						<option value="4">QNA 게시판</option>
 					</select>
 					<script>
 						const boardId = parseInt("${param.boardId}");

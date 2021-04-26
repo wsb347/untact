@@ -6,23 +6,6 @@
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<div class="flex">
-			<select class="py-2 select-auth-level">
-				<option value="">전체회원</option>
-				<option value="3">일반회원</option>
-				<option value="7">관리자</option>
-			</select>
-			<script>
-				if (!param.authLevel) {
-					param.authLevel = '';
-				}
-
-				$('.section-1 .select-auth-level').val(param.authLevel);
-				$('.section-1 .select-auth-level').change(function() {
-					location.href = '?authLevel=' + this.value;
-				});
-			</script>
-		</div>
 		<form class="flex mt-3">
 			<select name="searchKeywordType">			
 				<option value="nickname">닉네임</option>
