@@ -39,7 +39,7 @@
 		}
 		form.nickname.value = form.nickname.value.trim();
 		if (form.nickname.value.length == 0) {
-			alert('별명을 입력해주세요.');
+			alert('닉네임을 입력해주세요.');
 			form.nickname.focus();
 			return;
 		}
@@ -138,7 +138,7 @@
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>별명</span>
+					<span>닉네임</span>
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.nickname}" type="text" name="nickname" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="별명을 입력해주세요." />

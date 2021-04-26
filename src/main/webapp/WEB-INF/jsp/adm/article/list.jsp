@@ -9,7 +9,7 @@
 	param.boardId = parseInt("${board.id}");
 </script>
 <section class="section-1">
-	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-6">
+	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div>총 게시물 수 : ${Util.numberFormat(totalItemsCount)}개</div>
 		<div class="flex items-center">
 			<select class="py-2 select-board-id">

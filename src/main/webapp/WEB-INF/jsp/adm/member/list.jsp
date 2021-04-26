@@ -5,7 +5,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <section class="section-1">
-	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-6">
+	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="flex">
 			<select class="py-2 select-auth-level">
 				<option value="">전체회원</option>

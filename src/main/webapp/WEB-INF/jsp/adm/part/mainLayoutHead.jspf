@@ -1,52 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="head.jspf"%>
 
-<header class="top-bar h-20 bg-white">
-	<div class="container mx-auto h-full flex">
-		<a href="../home/main" class="logo flex items-center ml-2">
-			<span>
-				<i class="fas fa-people-arrows"></i>
-			</span>
-			<span>UNTACT ADMIN</span>
+<script type="text/javascript">
+	function isTouchDevice() {
+		return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+	}
+
+	const $html = document.querySelector('html');
+	$html.classList.add(isTouchDevice() ? 'touch-posible' : 'touch-imposible');
+</script>
+
+<header class="top-bar h-10 top-bar--fly">
+	<div class="container mx-auto flex h-full">
+		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-lemon"></i></span> <span class="hidden sm:block">&nbsp;ADMIN</span>
 		</a>
 
 		<div class="flex-grow"></div>
 
 		<nav class="menu-box-1">
 			<ul class="flex h-full">
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../home/main">
-						<span>관리자 홈</span>
-					</a>
-				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../member/list">
-						<span>회원 관리</span>
-					</a>
-				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../board/list">
-						<span>게시판 관리</span>
-					</a>
-				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../article/list">
-						<span>게시물 관리</span>
-					</a>
-				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline"
-						href="../member/doLogout">
-						<span>관리자 로그아웃</span>
-					</a>
-				</li>
-				
+				<li><a href="../home/main" class="h-full flex items-center px-5"> <span><i class="fas fa-house-user"></i></span> <span class="hidden sm:block">&nbsp;관리자 홈</span>
+				</a>
+					<div></div></li>
+				<li><a href="../../../swagger-ui/index.html" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;사이트 홈</span>
+				</a>
+					<div></div></li>
+				<li><a href="../member/list" class="h-full flex items-center px-5"> <span><i class="fas fa-user"></i></span> <span class="hidden md:block">&nbsp;회원관리</span>
+				</a>
+					<div></div></li>
+				<li><a href="../board/list" class="h-full flex items-center px-5"> <span><i class="far fa-clipboard"></i></span> <span class="hidden md:block">&nbsp;게시판 관리</span>
+				</a>
+					<div></div></li>
+				<li><a href="../article/list" class="h-full flex items-center px-5"> <span><i class="far fa-newspaper"></i></span> <span class="hidden md:block">&nbsp;게시물 관리</span>
+				</a>
+					<div>
+						<ul>
+							<li><a href="#"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;공지사항 게시판</span>
+							</a></li>
+							<li><a href="#"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;자유 게시판</span>
+							</a></li>
+							<li><a href="#"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;신고 게시판</span>
+							</a></li>
+							<li><a href="#"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;QNA 게시판</span>
+							</a></li>
+						</ul>
+					</div></li>
+				<li><a href="../member/doLogout" class="h-full flex items-center px-5"> <span><i class="fas fa-sign-out-alt"></i></span> <span class="hidden md:block">&nbsp;로그아웃</span>
+				</a>
+					<div></div></li>
 			</ul>
 		</nav>
 	</div>
+
 </header>

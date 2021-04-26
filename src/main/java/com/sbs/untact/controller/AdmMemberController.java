@@ -222,7 +222,7 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/list")
 	public String showList(HttpServletRequest req, String searchKeywordType, String searchKeyword,
 			@RequestParam(defaultValue = "1") int page, @RequestParam Map<String, Object> param, Integer authLevel) {
-		Member member = memberService.getMemberByAuthLevel(authLevel);
+		List<Member> member = memberService.getMemberByAuthLevel(authLevel);
 
 		if (member == null) {
 			authLevel = -1;
@@ -284,74 +284,6 @@ public class AdmMemberController extends BaseController {
 		return "adm/member/list";
 	}
 	
-	/*
-	 @RequestMapping("/adm/article/list")
-	public String showList(HttpServletRequest req, Integer boardId, String searchKeywordType, String searchKeyword,
-			@RequestParam(defaultValue = "1") Integer page) {
-
-		Board board = boardService.getBoard(boardId);
-
-		if (boardId == null) {
-			boardId = -1;
-		} else if (board == null) {
-			return msgAndBack(req, "존재하지않은 게시판입니다.");
-		}
-
-		req.setAttribute("board", board);
-
-		if (searchKeywordType != null) {
-			searchKeywordType = searchKeywordType.trim();
-		}
-
-		if (searchKeywordType == null || searchKeywordType.length() == 0) {
-			searchKeywordType = "titleAndBody";
-		}
-
-		if (searchKeyword != null && searchKeyword.length() == 0) {
-			searchKeyword = null;
-		}
-
-		if (searchKeyword != null) {
-			searchKeyword = searchKeyword.trim();
-		}
-
-		if (searchKeyword == null) {
-			searchKeywordType = null;
-		}
-
-		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
-
-		System.out.println("총 게시물 갯수 : " + totalItemsCount);
-
-		int itemsInAPage = 10;
-		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsInAPage);
-		int pageMenuArmSize = 5;
-		int pageMenuStart = page - pageMenuArmSize;
-
-		if (pageMenuStart < 1) {
-			pageMenuStart = 1;
-		}
-
-		int pageMenuEnd = page + pageMenuArmSize;
-		if (pageMenuEnd > totalPage) {
-			pageMenuEnd = totalPage;
-		}
-
-		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
-				itemsInAPage);
-
-		req.setAttribute("totalItemsCount", totalItemsCount);
-		req.setAttribute("totalPage", totalPage);
-		req.setAttribute("page", page);
-		req.setAttribute("articles", articles);
-		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
-		req.setAttribute("pageMenuStart", pageMenuStart);
-		req.setAttribute("pageMenuEnd", pageMenuEnd);
-
-		return "adm/article/list";
-	}
-	 */
-
 	@RequestMapping("/adm/member/doDelete")
 	public String doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");

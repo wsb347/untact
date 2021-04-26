@@ -30,7 +30,7 @@ public interface MemberDao {
 
 	void deleteMember(@Param(value = "id") Integer id);
 
-	Member getMemberByAuthLevel(@Param(value = "authLevel") Integer authLevel);
+	List<Member> getMemberByAuthLevel(@Param(value = "authLevel") Integer authLevel);
 
 	int getMemberTotalCount(@Param(value = "authLevel") Integer authLevel,
 			@Param(value = "searchKeywordType") String searchKeywordType, @Param(value = "searchKeyword") String searchKeyword);

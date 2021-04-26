@@ -135,7 +135,7 @@ public class MemberService {
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
 	}
 
-	public Member getMemberByAuthLevel(Integer authLevel) {
+	public List<Member> getMemberByAuthLevel(Integer authLevel) {
 		return memberDao.getMemberByAuthLevel(authLevel);
 	}
 
