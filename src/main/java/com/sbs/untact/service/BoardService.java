@@ -58,4 +58,8 @@ public class BoardService {
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
+
+	public int getBoardTotalCount(Integer id) {
+		return boardDao.getBoardTotalCount(id);
+	}
 }

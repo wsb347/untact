@@ -254,7 +254,6 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
 
 /* 기타 - 시작 */
 .component-title-bar {
-  border:solid black;
   border-width:2px 0;
   margin-top:20px;
   margin-bottom:10px;

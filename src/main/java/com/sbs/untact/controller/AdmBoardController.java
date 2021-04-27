@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.GenFile;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.BoardService;
 import com.sbs.untact.util.Util;
@@ -21,6 +25,24 @@ import com.sbs.untact.util.Util;
 public class AdmBoardController extends BaseController {
 	@Autowired
 	private BoardService boardService;
+	
+	@RequestMapping("/adm/board/detail")
+	public String showDetail(HttpServletRequest req, Integer id) {
+		Board board = boardService.getForPrintBoard(id);
+
+		int totalItemsCount = boardService.getBoardTotalCount(id);
+
+		req.setAttribute("totalItemsCount", totalItemsCount);
+		
+		
+		req.setAttribute("board", board);
+		
+		if (board == null) {
+			return msgAndBack(req, "존재하지 않는 번호입니다.");
+		}
+
+		return "adm/board/detail";
+	}
 	
 	@RequestMapping("/adm/board/getNameDup")
 	@ResponseBody

@@ -18,7 +18,7 @@
 		WHERE
 		name = #{name}
 	</select>
-	
+
 	<select id="getMemberByCode" resultType="Board">
 		SELECT *
 		FROM board
@@ -49,6 +49,15 @@
 		AND id = #{id};
 	</select>
 
+	<select id="getBoardTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+		WHERE 1
+		<if test="id != null and id != -1">
+			AND boardId = #{id}
+		</if>
+	</select>
+
 	<delete id="deleteBoard">
 		DELETE FROM board
 		WHERE id = #{id}
@@ -64,12 +73,13 @@
 		</set>
 		WHERE id = #{id}
 	</update>
-	
-	<insert id="addBoard"  useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO board
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		code = #{code},
+		code =
+		#{code},
 		name = #{name}
 	</insert>
 

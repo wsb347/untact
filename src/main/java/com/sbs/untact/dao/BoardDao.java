@@ -27,4 +27,6 @@ public interface BoardDao {
 
 	void addBoard(Map<String, Object> param);
 
+	int getBoardTotalCount(Integer id);
+
 }

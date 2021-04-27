@@ -23,7 +23,6 @@
 <!-- daisyui 불러오기 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@0.14.4/dist/full.css">
 
-<div class="component-title-bar container mx-auto"></div>
 
 
 </head>
