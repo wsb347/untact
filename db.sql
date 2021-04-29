@@ -109,10 +109,14 @@ updateDate = NOW(),
 # 게시물 테이블에 게시판 번호 칼럼 추가, updateDate 칼럼 뒤에
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
-# 기존 데이터를 랜덤하게 게시판 지정
+# 기존 데이터에 게시판 지정
 UPDATE article
-SET boardId = FLOOR(RAND() * 2) + 1
-WHERE boardId = 0;
+SET boardId = 1
+WHERE id IN (1, 2);
+
+UPDATE article
+SET boardId = 2
+WHERE id IN (3);
 
 # 댓글 테이블 추가
 CREATE TABLE reply (
@@ -198,3 +202,51 @@ CREATE TABLE genFile (
   PRIMARY KEY (id),
   KEY relId (relId,relTypeCode,typeCode,type2Code,fileNo)
 );
+
+# 회원 테이블에 권한레벨 필드 추가
+ALTER TABLE `member`
+ADD COLUMN `authLevel` SMALLINT(2) UNSIGNED
+DEFAULT 3 NOT NULL COMMENT '(3=일반,7=관리자,2=테스트)' AFTER `loginPw`; 
+
+# 1번 회원을 관리자로 지정한다.
+UPDATE `member`
+SET authLevel = 7
+WHERE id = 1;
+
+INSERT INTO article
+(regDate, updateDate, memberId, title, `body`, boardId)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), FLOOR(RAND() * 4) + 1
+FROM article;
+
+SELECT * FROM article;
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'report',
+`name` = '신고';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Q&A',
+`name` = 'Q&A';
+
+INSERT INTO board
+SET id = 0,
+regDate = NOW(),
+updateDate = NOW(),
+`code` = 'deleted',
+`name` = '보존';
+
+UPDATE board
+SET id = 0
+WHERE id = 5;
+
+/*
+UPDATE article
+SET updateDate = now(),
+boardId = 100
+WHERE id = 4;
+*/
+

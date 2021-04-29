@@ -79,7 +79,7 @@
 		<set>
 			<if test="id != null">
 				updateDate = NOW(),
-				boardId = 100
+				boardId = 0
 			</if>
 		</set>
 		WHERE boardId = #{id};
