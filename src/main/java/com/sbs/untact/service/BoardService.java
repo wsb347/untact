@@ -15,6 +15,8 @@ import com.sbs.untact.util.Util;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private GenFileService genFileService;
 
 	public List<Board> getForPrintBoards(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
 
@@ -61,5 +63,17 @@ public class BoardService {
 
 	public int getBoardTotalCount(Integer id) {
 		return boardDao.getBoardTotalCount(id);
+	}
+
+	public ResultData deleteBoard(Integer id) {
+		boardDao.deleteBoard(id);
+
+		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+
+	public ResultData modifyBoardIdByArticle(Integer id) {
+		boardDao.modifyBoardIdByArticle(id);
+
+		return new ResultData("S-1", "수정하였습니다.", "id", id);
 	}
 }

@@ -29,4 +29,8 @@ public interface BoardDao {
 
 	int getBoardTotalCount(Integer id);
 
+	void deleteBoard(Integer id);
+
+	void modifyBoardIdByArticle(Integer id);
+
 }

@@ -73,6 +73,17 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<update id="modifyBoardIdByArticle">
+		UPDATE article
+		<set>
+			<if test="id != null">
+				updateDate = NOW(),
+				boardId = 100
+			</if>
+		</set>
+		WHERE boardId = #{id};
+	</update>
 
 	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO board

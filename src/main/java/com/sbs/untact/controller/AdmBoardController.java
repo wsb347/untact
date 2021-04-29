@@ -1,6 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.BoardService;
@@ -183,4 +180,23 @@ public class AdmBoardController extends BaseController {
 				"../board/list");
 	}
 	
+	@RequestMapping("/adm/board/doDelete")
+	public String doDelete(Integer id, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Board board = boardService.getBoard(id);
+
+		if (board == null) {
+			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
+		}
+
+		boardService.modifyBoardIdByArticle(id);
+		boardService.deleteBoard(id);
+
+		return msgAndReplace(req, String.format("%d번 게시판이 삭제되었습니다.", id), "../board/list?boardId=" + id);
+	}
 }
