@@ -4,24 +4,24 @@
 <%@ include file="../part/head.jspf"%>
 
 <script>
-	const LoginForm__checkAndSubmitDone = false;
-	function LoginForm__checkAndSubmit(form) {
-		if (LoginForm__checkAndSubmitDone) {
+	const findLoginId__checkAndSubmitDone = false;
+	function findLoginId__checkAndSubmit(form) {
+		if (findLoginId__checkAndSubmitDone) {
 			return;
 		}
 
-		form.loginId.value = form.loginId.value.trim();
+		form.name.value = form.name.value.trim();
 
-		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요.');
-			form.loginId.focus();
+		if (form.name.value.length == 0) {
+			alert('이름을 입력해주세요.');
+			form.name.focus();
 
 			return;
 		}
 
-		if (form.loginPw.value.length == 0) {
-			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
+		if (form.email.value.length == 0) {
+			alert('이메일을 입력해주세요.');
+			form.email.focus();
 
 			return;
 		}
@@ -42,42 +42,39 @@
 				</a>
 			</div>
 			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mt-4"
-				action="doLogin" method="POST"
-				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+				action="doFindLoginId" method="POST"
+				onsubmit="findLoginIdForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
-						<span>로그인아이디</span>
+						<span>이름</span>
 					</div>
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="로그인 아이디를 입력해주세요."
-							name="loginId" maxlength="20" />
+							autofocus="autofocus" type="text" placeholder="이름를 입력해주세요."
+							name="name" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
-						<span>로그인비번</span>
+						<span>이메일</span>
 					</div>
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="password"
-							placeholder="로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="20" />
+							autofocus="autofocus" type="email"
+							placeholder="이메일을 입력해주세요." name="email" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1">
 						<input
 							class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="로그인" /> 
+							type="submit" value="아이디찾기" /> 
 							<a href="join"
 							class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
 							type="submit">회원가입</a> 
-							<a href="findLoginId"
-							class="btn btn-link btn-sm mb-1"
-							type="submit"><i class="fas fa-sign-in-alt"></i> 아이디 찾기</a> 
 							<a href="findLoginPw"
 							class="btn btn-link btn-sm mb-1"
 							type="submit"><i class="fas fa-sign-in-alt"></i> 비밀번호 찾기</a> 

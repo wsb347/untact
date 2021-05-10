@@ -34,4 +34,6 @@ public interface MemberDao {
 
 	int getMemberTotalCount(@Param(value = "authLevel") Integer authLevel,
 			@Param(value = "searchKeywordType") String searchKeywordType, @Param(value = "searchKeyword") String searchKeyword);
+
+	Member getMemberByNameAndEmail(@Param(value = "name")String name, @Param(value = "email")String email);
 }

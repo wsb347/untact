@@ -39,6 +39,12 @@
 		WHERE nickname = #{nickname}
 	</select>
 
+	<select id="getMemberByNameAndEmail" resultType="Member">
+		SELECT * FROM `member`
+		WHERE email = #{email}
+		AND name = #{name}
+	</select>
+
 	<select id="getMemberByAuthLevel" resultType="Member">
 		SELECT * FROM `member`
 		WHERE authLevel = #{authLevel}

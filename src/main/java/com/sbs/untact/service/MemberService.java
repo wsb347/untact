@@ -143,5 +143,9 @@ public class MemberService {
 		return memberDao.getMemberTotalCount(authLevel,searchKeywordType,searchKeyword);
 		}
 
+	public Member getMemberByNameAndEmail(String name, String email) {
+		return memberDao.getMemberByNameAndEmail(name, email);
+	}
+
 
 }

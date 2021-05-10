@@ -27,6 +27,35 @@ public class AdmMemberController extends BaseController {
 	@Autowired
 	private GenFileService genFileService;
 	
+	@RequestMapping("/adm/member/findLoginId")
+	public String findLogin() {
+		return "adm/member/findLoginId";
+	}
+
+	@RequestMapping("/adm/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLogin(String name, String email, String redirectUrl) {
+		Member existingMemberByNameAndEmail = memberService.getMemberByNameAndEmail(name, email);
+
+		if (existingMemberByNameAndEmail == null) {
+			return Util.msgAndBack("존재하지않는 정보입니다.");
+		}
+
+		if (name == null) {
+			return Util.msgAndBack("name(을)를 입력해주세요.");
+		}
+
+		if (email == null) {
+			return Util.msgAndBack("email(을)를 입력해주세요.");
+		}
+
+		String msg = String.format("회원님의 아이디는 %s 입니다", existingMemberByNameAndEmail.getLoginId());
+
+		redirectUrl = Util.ifEmpty(redirectUrl, "../member/login");
+
+		return Util.msgAndReplace(msg, redirectUrl);
+	}
+	
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 		Member member = memberService.getForPrintMember(id);
