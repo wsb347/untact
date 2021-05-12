@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.sbs.untact.dao.MemberDao;
@@ -15,14 +16,22 @@ import com.sbs.untact.util.Util;
 @Service
 public class MemberService {
 	@Autowired
+	private MailService mailService;
+
+	@Value("${custom.siteMainUri}")
+	private String siteMainUri;
+	@Value("${custom.siteName}")
+	private String siteName;
+
+	@Autowired
 	private MemberDao memberDao;
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	// static 시작
 
 	public static String getAuthLevelName(Member member) {
-		switch ( member.getAuthLevel() ) {
+		switch (member.getAuthLevel()) {
 		case 7:
 			return "관리자";
 		case 3:
@@ -33,7 +42,7 @@ public class MemberService {
 	}
 
 	public static String getAuthLevelNameColor(Member member) {
-		switch ( member.getAuthLevel() ) {
+		switch (member.getAuthLevel()) {
 		case 7:
 			return "red";
 		case 3:
@@ -45,13 +54,12 @@ public class MemberService {
 
 	// static 끝
 
-
 	public ResultData memberJoin(Map<String, Object> param) {
 		memberDao.memberJoin(param);
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		genFileService.changeInputFileRelIds(param, id);
-		
+
 		return new ResultData("S-1", "성공하였습니다.");
 	}
 
@@ -84,11 +92,11 @@ public class MemberService {
 		return memberDao.getMembers();
 	}
 
-	public List<Member> getForPrintMembers(Integer authLevel, String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
-			Map<String, Object> param) {
+	public List<Member> getForPrintMembers(Integer authLevel, String searchKeywordType, String searchKeyword, int page,
+			int itemsInAPage, Map<String, Object> param) {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
-		
+
 		param.put("searchKeywordType", searchKeywordType);
 		param.put("searchKeyword", searchKeyword);
 		param.put("limitStart", limitStart);
@@ -140,12 +148,32 @@ public class MemberService {
 	}
 
 	public int getMemberTotalCount(Integer authLevel, String searchKeywordType, String searchKeyword) {
-		return memberDao.getMemberTotalCount(authLevel,searchKeywordType,searchKeyword);
-		}
+		return memberDao.getMemberTotalCount(authLevel, searchKeywordType, searchKeyword);
+	}
 
 	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
+	public ResultData notifyTempLoginPwByEmail(Member actor) {
+		String title = "[" + siteName + "] 임시 패스워드 발송";
+		String tempPassword = Util.getTempPassword(6);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+		body += "<a href=\"" + siteMainUri + "/adm/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
+	
+		if (sendResultData.isFail()) {
+			return sendResultData;
+		}
+
+		setTempPassword(actor, tempPassword);
+
+		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+	}
+
+	private void setTempPassword(Member actor, String tempPassword) {
+		memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
+	}
 
 }

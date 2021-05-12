@@ -33,7 +33,11 @@ public interface MemberDao {
 	List<Member> getMemberByAuthLevel(@Param(value = "authLevel") Integer authLevel);
 
 	int getMemberTotalCount(@Param(value = "authLevel") Integer authLevel,
-			@Param(value = "searchKeywordType") String searchKeywordType, @Param(value = "searchKeyword") String searchKeyword);
+			@Param(value = "searchKeywordType") String searchKeywordType,
+			@Param(value = "searchKeyword") String searchKeyword);
 
-	Member getMemberByNameAndEmail(@Param(value = "name")String name, @Param(value = "email")String email);
+	Member getMemberByNameAndEmail(@Param(value = "name") String name, @Param(value = "email") String email);
+
+	void modify(@Param("id") int id, @Param("loginPw") String loginPw, @Param("name") String name,
+			@Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo, @Param("email") String email);
 }

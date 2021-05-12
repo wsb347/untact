@@ -26,15 +26,15 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	@RequestMapping("/adm/member/findLoginId")
-	public String findLogin() {
+	public String findLoginId() {
 		return "adm/member/findLoginId";
 	}
 
 	@RequestMapping("/adm/member/doFindLoginId")
 	@ResponseBody
-	public String doFindLogin(String name, String email, String redirectUrl) {
+	public String doFindLoginId(String name, String email, String redirectUrl) {
 		Member existingMemberByNameAndEmail = memberService.getMemberByNameAndEmail(name, email);
 
 		if (existingMemberByNameAndEmail == null) {
@@ -55,7 +55,36 @@ public class AdmMemberController extends BaseController {
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
-	
+
+	@RequestMapping("/adm/member/findLoginPw")
+	public String findLoginPw() {
+		return "adm/member/findLoginPw";
+	}
+
+	@RequestMapping("/adm/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(String loginId, String name, String email, String redirectUrl) {
+		Member existingMemberByloginId = memberService.getMemberByLoginId(loginId);
+
+		if (existingMemberByloginId == null) {
+			return Util.msgAndBack("존재하지않는 정보입니다.");
+		}
+
+		if (existingMemberByloginId.getName().equals(name) == false) {
+			return Util.msgAndBack("존재하지않는 정보입니다.");
+		}
+
+		if (existingMemberByloginId.getEmail().equals(email) == false) {
+			return Util.msgAndBack("존재하지않는 정보입니다.");
+		}
+
+		ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(existingMemberByloginId);
+
+		redirectUrl = Util.ifEmpty(redirectUrl, "../member/login");
+
+		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
+	}
+
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 		Member member = memberService.getForPrintMember(id);
@@ -70,7 +99,7 @@ public class AdmMemberController extends BaseController {
 
 		member.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("member", member);
-		
+
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 번호입니다.");
 		}
@@ -82,11 +111,11 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {
-		
-		if(loginId == null) {
+
+		if (loginId == null) {
 			return new ResultData("F-1", "loginId를 입력해주세요.");
 		}
-		
+
 		if (Util.allNumberString(loginId)) {
 			return new ResultData("F-3", "로그인아이디는 숫자만으로 구성될 수 없습니다.");
 		}
@@ -112,10 +141,10 @@ public class AdmMemberController extends BaseController {
 		if (existingMember != null) {
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 로그인아이디 입니다.", loginId));
 		}
-		
+
 		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 아이디입니다.", loginId), "loginId", loginId);
 	}
-	
+
 	@RequestMapping("/adm/member/login")
 	public String login() {
 		return "adm/member/login";
@@ -258,9 +287,9 @@ public class AdmMemberController extends BaseController {
 		} else if (member == null) {
 			return msgAndBack(req, "존재하지않은 관리자 레벨입니다.");
 		}
-		
+
 		req.setAttribute("member", member);
-		
+
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -280,7 +309,7 @@ public class AdmMemberController extends BaseController {
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
-		
+
 		int totalItemsCount = memberService.getMemberTotalCount(authLevel, searchKeywordType, searchKeyword);
 
 		System.out.println("총 회원 수 : " + totalItemsCount);
@@ -299,8 +328,8 @@ public class AdmMemberController extends BaseController {
 			pageMenuEnd = totalPage;
 		}
 
-		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordType, searchKeyword, page, itemsInAPage,
-				param);
+		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordType, searchKeyword, page,
+				itemsInAPage, param);
 
 		req.setAttribute("totalItemsCount", totalItemsCount);
 		req.setAttribute("totalPage", totalPage);
@@ -309,10 +338,10 @@ public class AdmMemberController extends BaseController {
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
 		req.setAttribute("pageMenuStart", pageMenuStart);
 		req.setAttribute("pageMenuEnd", pageMenuEnd);
-		
+
 		return "adm/member/list";
 	}
-	
+
 	@RequestMapping("/adm/member/doDelete")
 	public String doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -337,5 +366,5 @@ public class AdmMemberController extends BaseController {
 
 		return msgAndReplace(req, String.format("%d번 회원이 삭제되었습니다.", id), "../member/list");
 	}
-	
+
 }

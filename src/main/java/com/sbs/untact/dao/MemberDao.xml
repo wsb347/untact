@@ -9,19 +9,23 @@
 		INSERT INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId = #{loginId},
+		loginId =
+		#{loginId},
 		loginPw = #{loginPw},
 		nickname = #{nickname},
-		`name` = #{name},
+		`name` =
+		#{name},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email},
-		authKey = CONCAT('authKey1__', UUID(), '__', RAND())
+		authKey =
+		CONCAT('authKey1__', UUID(), '__', RAND())
 	</insert>
 
 	<!-- public Member getMember(String loginId); -->
 	<select id="getMember" resultType="Member">
 		SELECT * FROM `member`
-		WHERE id = #{id}
+		WHERE id
+		= #{id}
 	</select>
 
 	<select id="getForPrintMember" resultType="Member">
@@ -30,27 +34,30 @@
 	</select>
 
 	<select id="getMemberByLoginId" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE loginId = #{loginId}
 	</select>
 
 	<select id="getMemberByNickname" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE nickname = #{nickname}
 	</select>
 
 	<select id="getMemberByNameAndEmail" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE email = #{email}
 		AND name = #{name}
 	</select>
 
 	<select id="getMemberByAuthLevel" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE authLevel = #{authLevel}
 	</select>
 
-	<!-- public void modifyMember(Map<String, Object> param); -->
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>
@@ -80,8 +87,32 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="modify">
+		UPDATE `member`
+		<set>
+			updateDate = NOW(),
+			<if test="loginPw != null">
+				loginPw = #{loginPw},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="nickname != null">
+				nickname = #{nickname},
+			</if>
+			<if test="cellphoneNo != null">
+				cellphoneNo = #{cellphoneNo},
+			</if>
+			<if test="email != null">
+				email = #{email},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<select id="getMemberByAuthKey" resultType="Member">
-		SELECT * FROM `member`
+		SELECT * FROM
+		`member`
 		WHERE authKey = #{authKey}
 	</select>
 
@@ -114,7 +145,7 @@
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
-	
+
 	<select id="getMemberTotalCount" resultType="int">
 		SELECT COUNT(*)
 		FROM `member`

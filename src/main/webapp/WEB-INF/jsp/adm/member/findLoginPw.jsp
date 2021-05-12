@@ -3,12 +3,21 @@
 <%@ include file="../part/head.jspf"%>
 
 <script>
-	const findLoginId__checkAndSubmitDone = false;
-	function findLoginId__checkAndSubmit(form) {
-		if (findLoginId__checkAndSubmitDone) {
+	const findLoginPw__checkAndSubmitDone = false;
+	function findLoginPw__checkAndSubmit(form) {
+		if (findLoginPw__checkAndSubmitDone) {
 			return;
 		}
+		
+		form.loginId.value = form.loginId.value.trim();
 
+		if (form.loginId.value.length == 0) {
+			alert('아이디를 입력해주세요.');
+			form.loginId.focus();
+
+			return;
+		}
+		
 		form.name.value = form.name.value.trim();
 
 		if (form.name.value.length == 0) {
@@ -17,6 +26,8 @@
 
 			return;
 		}
+		
+		form.email.value = form.email.value.trim();
 
 		if (form.email.value.length == 0) {
 			alert('이메일을 입력해주세요.');
@@ -38,8 +49,16 @@
 				</span> <span>UNTACT</span>
 				</a>
 			</div>
-			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mt-4" action="doFindLoginId" method="POST" onsubmit="findLoginIdForm__checkAndSubmit(this); return false;">
+			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mt-4" action="doFindLoginPw" method="POST" onsubmit="findLoginPwForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+				<div class="flex flex-col mb-4 md:flex-row">
+					<div class="p-1 md:w-36 md:flex md:items-center">
+						<span>아이디</span>
+					</div>
+					<div class="p-1 md:flex-grow">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="아이디를 입력해주세요." name="loginId" maxlength="20" />
+					</div>
+				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
 						<span>이름</span>
@@ -58,10 +77,10 @@
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1">
-						<input class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit" value="아이디찾기" />
+						<input class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit" value="비밀번호찾기" />
 						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" value="취소">
 						<a href="join" class="btn btn-link btn-sm mb-1" type="submit"><i class="fas fa-sign-in-alt"></i> 회원가입</a>
-						<a href="findLoginPw" class="btn btn-link btn-sm mb-1" type="submit"><i class="fas fa-sign-in-alt"></i> 비밀번호 찾기</a>
+						<a href="findLoginId" class="btn btn-link btn-sm mb-1" type="submit"><i class="fas fa-sign-in-alt"></i> 아이디 찾기</a>
 					</div>
 				</div>
 			</form>
