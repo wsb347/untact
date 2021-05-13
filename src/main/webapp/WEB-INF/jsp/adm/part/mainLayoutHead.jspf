@@ -23,7 +23,7 @@
 				<li><a href="../home/main" class="h-full flex items-center px-5"> <span><i class="fas fa-house-user"></i></span> <span class="hidden sm:block">&nbsp;관리자 홈</span>
 				</a>
 					<div></div></li>
-				<li><a href="../../../swagger-ui/index.html" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;사이트 홈</span>
+				<li><a href="../../usr/home/main" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;사이트 홈</span>
 				</a>
 					<div></div></li>
 				<li><a href="../member/list" class="h-full flex items-center px-5"> <span><i class="fas fa-user"></i></span> <span class="hidden md:block">&nbsp;회원관리</span>
