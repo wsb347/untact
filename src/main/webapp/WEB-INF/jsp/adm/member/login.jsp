@@ -3,6 +3,8 @@
 
 <%@ include file="../part/head.jspf"%>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <script>
 	const LoginForm__checkAndSubmitDone = false;
 	function LoginForm__checkAndSubmit(form) {
@@ -18,13 +20,18 @@
 
 			return;
 		}
+		
+		form.loginPwInput.value = form.loginPwInput.value.trim();
 
-		if (form.loginPw.value.length == 0) {
+		if (form.loginPwInput.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
+			form.loginPwInput.focus();
 
 			return;
 		}
+		
+		 form.loginPw.value = sha256(form.loginPwInput.value);
+		 form.loginPwInput.value = '';
 
 		form.submit();
 		LoginForm__checkAndSubmitDone = true;
@@ -45,6 +52,7 @@
 				action="doLogin" method="POST"
 				onsubmit="LoginForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+				<input type="hidden" name="loginPw" />
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
 						<span>로그인아이디</span>
@@ -64,7 +72,7 @@
 						<input
 							class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="password"
-							placeholder="로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="20" />
+							placeholder="로그인 비밀번호를 입력해주세요." name="loginPwInput" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">

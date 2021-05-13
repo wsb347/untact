@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../part/head.jspf"%>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
 	const JoinForm__checkAndSubmitDone = false;
@@ -52,10 +52,10 @@
 			form.loginId.focus();
 			return;
 		}
-		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length == 0) {
+		form.loginPwInput.value = form.loginPwInput.value.trim();
+		if (form.loginPwInput.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
+			form.loginPwInput.focus();
 			return;
 		}
 		if (form.loginPwConfirm.value.length == 0) {
@@ -63,7 +63,7 @@
 			form.loginPwConfirm.focus();
 			return;
 		}
-		if (form.loginPw.value != form.loginPwConfirm.value) {
+		if (form.loginPwInput.value != form.loginPwConfirm.value) {
 			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
 			return;
@@ -102,6 +102,11 @@
 			if (data) {
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
 			}
+			
+			form.loginPw.value = sha256(form.loginPwInput.value);
+		    form.loginPwInput.value = '';
+		    form.loginPwConfirm.value = '';
+			
 			form.submit();
 			JoinForm__checkAndSubmitDone = true;
 		}
@@ -126,6 +131,7 @@
 			// 응답을 받는다.
 			// onSuccess를 실행한다.
 		}
+		
 		startUpload(submitForm);
 	}
 
@@ -153,6 +159,7 @@
 					action="doJoin" method="POST" enctype="multipart/form-data"
 					onsubmit="JoinForm__checkAndSubmit(this); return false;">
 					<input type="hidden" name="genFileIdsStr" />
+					<input type="hidden" name="loginPw" />
 					<div class="form-row flex flex-col lg:flex-row">
 						<div class="lg:flex lg:items-center lg:w-28">
 							<span>아이디</span>
@@ -170,7 +177,7 @@
 							<span>비밀번호</span>
 						</div>
 						<div class="lg:flex-grow">
-							<input type="password" name="loginPw" autofocus="autofocus"
+							<input type="password" name="loginPwInput" autofocus="autofocus"
 								class="form-row-input w-full rounded-sm"
 								placeholder="비밀번호를 입력해주세요." />
 						</div>

@@ -165,7 +165,7 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("loginId(을)를 입력해주세요.");
 		}
 
-		if (existingMemberByLoginid.getLoginPw().equals(Util.sha256(loginPw)) == false) {
+		if (existingMemberByLoginid.getLoginPw().equals(loginPw) == false) {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
 		}
 
