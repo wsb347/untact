@@ -55,6 +55,10 @@ public class MemberService {
 	// static 끝
 
 	public ResultData memberJoin(Map<String, Object> param) {
+		String loginPw = Util.sha256(param.get("loginPw").toString());
+
+		param.put("loginPw", loginPw);
+
 		memberDao.memberJoin(param);
 		int id = Util.getAsInt(param.get("id"), 0);
 
@@ -76,6 +80,10 @@ public class MemberService {
 	}
 
 	public ResultData modifyMember(Map<String, Object> param) {
+		String loginPw = Util.sha256(param.get("loginPw").toString());
+
+		param.put("loginPw", loginPw);
+
 		memberDao.modifyMember(param);
 		return new ResultData("S-1", "회원정보가 수정되었습니다.");
 	}
@@ -162,7 +170,7 @@ public class MemberService {
 		body += "<a href=\"" + siteMainUri + "/adm/member/login\" target=\"_blank\">로그인 하러가기</a>";
 
 		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
-	
+
 		if (sendResultData.isFail()) {
 			return sendResultData;
 		}
@@ -173,6 +181,8 @@ public class MemberService {
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
+		tempPassword = Util.sha256(tempPassword);
+
 		memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
 
