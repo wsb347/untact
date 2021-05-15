@@ -13,7 +13,7 @@
 
 <header class="top-bar h-10 top-bar--fly">
 	<div class="container mx-auto flex h-full">
-		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-cat"></i></span> <span class="hidden sm:block">&nbsp;ADMIN</span>
+		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-cat"></i></span> <span class="hidden sm:block">&nbsp;UNTACT</span>
 		</a>
 
 		<div class="flex-grow"></div>
@@ -22,19 +22,17 @@
 			<ul class="flex h-full">
 				<li><a href="../../usr/home/main" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;사이트 홈</span>
 				</a></li>
-				<li><a href="#" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;마이 페이지</span>
-				</a></li>
 				<li><a href="../article/list" class="h-full flex items-center px-5"> <span><i class="far fa-newspaper"></i></span> <span class="hidden md:block">&nbsp;게시물</span>
 				</a>
 					<div>
 						<ul>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=1"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;공지사항 게시판</span>
+							<li><a href="http://localhost:8088/usr/article/list?boardId=1"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;공지사항 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=2"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;자유 게시판</span>
+							<li><a href="http://localhost:8088/usr/article/list?boardId=2"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;자유 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=3"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;신고 게시판</span>
+							<li><a href="http://localhost:8088/usr/article/list?boardId=3"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;신고 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=4"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;Q&A 게시판</span>
+							<li><a href="http://localhost:8088/usr/article/list?boardId=4"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;Q&A 게시판</span>
 							</a></li>
 						</ul>
 					</div></li>
@@ -42,7 +40,7 @@
 						<li><a href="../member/doLogout" class="h-full flex items-center px-5"> <span><i class="fas fa-sign-out-alt"></i></span> <span class="hidden md:block">&nbsp;로그아웃</span>
 					</a></li>
 					   <li>
-	                        <a href="#" class="h-full flex items-center px-5">
+	                        <a href="../member/mypage" class="h-full flex items-center px-5">
 	                            <span>
 	                                <i class="fas fa-sign-out-alt"></i>
 	                            </span>
