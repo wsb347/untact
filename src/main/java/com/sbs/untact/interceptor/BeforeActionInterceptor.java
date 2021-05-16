@@ -15,10 +15,7 @@ import com.sbs.untact.dto.Req;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Component("beforeActionInterceptor") // 컴포넌트 이름 설정
-@Slf4j
 public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Autowired
 	private MemberService memberService;

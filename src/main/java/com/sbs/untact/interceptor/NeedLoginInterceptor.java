@@ -30,7 +30,7 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 				resultCode = "F-B";
 				resultMsg = "인증키가 올바르지 않습니다.";
 			}
-
+			
 			if (isAjax == false) {
 				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().append("<script>");

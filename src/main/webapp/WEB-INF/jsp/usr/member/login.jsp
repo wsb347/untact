@@ -55,24 +55,24 @@
 				<input type="hidden" name="loginPw" />
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
-						<span>로그인아이디</span>
+						<span>아이디</span>
 					</div>
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="로그인 아이디를 입력해주세요."
+							autofocus="autofocus" type="text" placeholder="아이디를 입력해주세요."
 							name="loginId" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:w-36 md:flex md:items-center">
-						<span>로그인비번</span>
+						<span>비밀번호</span>
 					</div>
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="password"
-							placeholder="로그인 비밀번호를 입력해주세요." name="loginPwInput" maxlength="20" />
+							placeholder="비밀번호를 입력해주세요." name="loginPwInput" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">

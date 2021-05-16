@@ -62,13 +62,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/gen/**").excludePathPatterns("/resource/**")
 				.excludePathPatterns("/usr/home/main").excludePathPatterns("/usr/member/authKey")
 				.excludePathPatterns("/usr/member/login").excludePathPatterns("/usr/member/doLogin")
-				.excludePathPatterns("/usr/member/join").excludePathPatterns("/usr/member/doJoin")
 				.excludePathPatterns("/usr/article/list").excludePathPatterns("/usr/article/detail")
 				.excludePathPatterns("/usr/reply/list").excludePathPatterns("/usr/member/findLoginId")
 				.excludePathPatterns("/usr/member/doFindLoginId").excludePathPatterns("/usr/member/findLoginPw")
 				.excludePathPatterns("/usr/member/doFindLoginPw").excludePathPatterns("/common/**")
 				.excludePathPatterns("/usr/file/test*").excludePathPatterns("/usr/file/doTest*")
-				.excludePathPatterns("/test/**").excludePathPatterns("/error");
+				.excludePathPatterns("/test/**").excludePathPatterns("/error")
+				.excludePathPatterns("/usr/member/join").excludePathPatterns("/usr/member/doJoin")
+				.excludePathPatterns("/usr/member/getLoginIdDup");
 
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
 		registry.addInterceptor(needLogoutInterceptor).addPathPatterns("/adm/member/login")
