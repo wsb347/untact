@@ -133,7 +133,7 @@
 				<div class="lg:flex-grow">
 					<input accept="image/gif, image/jpeg, image/png" class="form-row-input w-full rounded-sm" placeholder="이름을 입력해주세요." autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요." name="file__member__${member.id}__common__attachment__1" maxlength="20" />
 					<c:set var="fileNo" value="${String.valueOf(1)}" />
-					${member.extra.file__common__attachment[fileNo].mediaHtml}
+					<div class="max-w-xs">${member.extra.file__common__attachment[fileNo].mediaHtml}</div>
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">

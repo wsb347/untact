@@ -106,13 +106,13 @@
 			<input type="hidden" name="loginPw" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>로그인아이디</span>
+					<span>아이디</span>
 				</div>
 				<div class="lg:flex-grow">${member.loginId}</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>로그인비번</span>
+					<span>비밀번호</span>
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPwInput" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호를 입력해주세요." />
@@ -120,7 +120,7 @@
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>로그인비번 확인</span>
+					<span>비밀번호 확인</span>
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPwConfirm" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호 확인을 입력해주세요." />
@@ -133,7 +133,7 @@
 				<div class="lg:flex-grow">
 					<input accept="image/gif, image/jpeg, image/png" class="form-row-input w-full rounded-sm" placeholder="이름을 입력해주세요." autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요." name="file__member__${member.id}__common__attachment__1" maxlength="20" />
 					<c:set var="fileNo" value="${String.valueOf(1)}" />
-					${member.extra.file__common__attachment[fileNo].mediaHtml}
+					<div class="max-w-xs">${member.extra.file__common__attachment[fileNo].mediaHtml}</div>
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -166,23 +166,6 @@
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.cellphoneNo}" type="text" name="cellphoneNo" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="전화번호를 입력해주세요." />
-				</div>
-			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>권한레벨</span>
-				</div>
-				<div class="lg:flex-grow">
-					<select class="form-row-input w-full rounded-sm select-auth-level" name="authLevel">
-						<option value="3">일반회원</option>
-						<option value="7">관리자</option>
-					</select>
-					<script>
-						const memberAuthLevel = parseInt("${member.authLevel}");
-					</script>
-					<script>
-						$('.section-1 .select-auth-level').val(memberAuthLevel);
-					</script>
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">

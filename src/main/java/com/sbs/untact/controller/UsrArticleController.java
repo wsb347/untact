@@ -132,6 +132,7 @@ public class UsrArticleController extends BaseController {
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (param.get("title") == null) {
 			return msgAndBack(req, "title을 입력해주세요.");
@@ -140,12 +141,16 @@ public class UsrArticleController extends BaseController {
 		if (param.get("body") == null) {
 			return msgAndBack(req, "body를 입력해주세요.");
 		}
+		
+		if (loginedMember == null) {
+			return msgAndBack(req, "작성자만 가능합니다");
+		}
 
 		param.put("memberId", loginedMemberId);
 
-		ResultData addArticleRd = articleService.addArticle(param);
+		articleService.addArticle(param);
 
-		int newArticleId = (int) addArticleRd.getBody().get("id");
+		int newArticleId = (int) param.get("id");
 
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
 				"../article/detail?id=" + newArticleId);
@@ -165,14 +170,8 @@ public class UsrArticleController extends BaseController {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
-		if(loginedMember.getId() != article.getMemberId()) {
+		if (loginedMember.getId() != article.getMemberId()) {
 			return msgAndBack(req, "작성자만 가능합니다");
-		}
-		
-		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
-
-		if (actorCanDeleteRd.isFail()) {
-			return msgAndBack(req, "관리자만 가능합니다");
 		}
 
 		int boardId = article.getBoardId();
@@ -224,16 +223,10 @@ public class UsrArticleController extends BaseController {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
-
-		if (actorCanModifyRd.isFail()) {
-			return msgAndBack(req, "관리자만 가능합니다");
-		}
-
-		if(loginedMember.getId() != article.getMemberId()) {
+		if (loginedMember.getId() != article.getMemberId()) {
 			return msgAndBack(req, "작성자만 가능합니다");
 		}
-		
+
 		articleService.modifyArticle(param);
 
 		return msgAndReplace(req, String.format("%d번 게시물이 수정되었습니다.", id),

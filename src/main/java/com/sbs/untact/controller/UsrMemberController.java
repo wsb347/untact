@@ -27,6 +27,18 @@ public class UsrMemberController extends BaseController{
 	@Autowired
 	private GenFileService genFileService;
 
+	@RequestMapping("/usr/member/mypage")
+	public String showMypage(HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		
+		if (loginedMember == null) {
+			return msgAndBack(req, "로그인이 필요합니다");
+		}
+		
+		String redirectUrl = "usr/member/mypage";
+		return redirectUrl;
+	}
+	
 	@RequestMapping("/usr/member/findLoginId")
 	public String findLoginId() {
 		return "usr/member/findLoginId";
@@ -155,8 +167,6 @@ public class UsrMemberController extends BaseController{
 	public String doLogin(String loginId, String loginPw, String redirectUrl, HttpSession session) {
 		Member existingMemberByLoginid = memberService.getMemberByLoginId(loginId);
 
-		System.out.println("로그인 정보 : " + session.getAttribute("loginedMemberId"));
-
 		if (existingMemberByLoginid == null) {
 			return Util.msgAndBack(String.format("%s (은)는 존재하지않는 아이디입니다.", loginId));
 		}
@@ -214,7 +224,7 @@ public class UsrMemberController extends BaseController{
 
 		memberService.modifyMember(param);
 
-		return msgAndReplace(req, "정보가 수정되었습니다.", "../member/list");
+		return msgAndReplace(req, "정보가 수정되었습니다.", "../member/mypage");
 	}
 
 	@RequestMapping("/usr/member/doLogout")
@@ -222,7 +232,7 @@ public class UsrMemberController extends BaseController{
 	public String doLogout(HttpSession session) {
 		session.removeAttribute("loginedMemberId");
 
-		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
+		return Util.msgAndReplace("로그아웃 되었습니다.", "../home/main");
 	}
 
 	@RequestMapping("/usr/member/join")
@@ -274,5 +284,26 @@ public class UsrMemberController extends BaseController{
 
 		return Util.msgAndReplace("회원가입 되었습니다.", "../member/login");
 	}
+	
+
+	@RequestMapping("/usr/member/doDelete")
+	public String doDelete(Integer id, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Member member = memberService.getMember(id);
+
+		if (member == null) {
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+		}
+
+		memberService.deleteMember(id);
+
+		return msgAndReplace(req, String.format("%d번 회원이 삭제되었습니다.", id), "../home/main");
+	}
+
 
 }
