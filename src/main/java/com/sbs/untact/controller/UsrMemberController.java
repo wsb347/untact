@@ -21,24 +21,40 @@ import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
 @Controller
-public class UsrMemberController extends BaseController{
+public class UsrMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
 
+	@RequestMapping("/usr/member/checkPassword")
+	public String showCheckPassword(HttpServletRequest req) {
+		return "usr/member/checkPassword";
+	}
+
+	 @RequestMapping("/usr/member/doCheckPassword")
+	    public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
+	        Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+	        if (loginedMember.getLoginPw().equals(loginPw) == false) {
+	            return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+	        }
+
+	        return msgAndReplace(req, "", redirectUri);
+	    }
+
 	@RequestMapping("/usr/member/mypage")
 	public String showMypage(HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		
+
 		if (loginedMember == null) {
 			return msgAndBack(req, "로그인이 필요합니다");
 		}
-		
+
 		String redirectUrl = "usr/member/mypage";
 		return redirectUrl;
 	}
-	
+
 	@RequestMapping("/usr/member/findLoginId")
 	public String findLoginId() {
 		return "usr/member/findLoginId";
@@ -251,7 +267,7 @@ public class UsrMemberController extends BaseController{
 		}
 
 		System.out.println("existingMember : " + existingMember);
-		
+
 		if (existingMemberByNickname != null) {
 			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 닉네임입니다.", param.get("nickname")));
 		}
@@ -284,7 +300,6 @@ public class UsrMemberController extends BaseController{
 
 		return Util.msgAndReplace("회원가입 되었습니다.", "../member/login");
 	}
-	
 
 	@RequestMapping("/usr/member/doDelete")
 	public String doDelete(Integer id, HttpServletRequest req) {
@@ -304,6 +319,5 @@ public class UsrMemberController extends BaseController{
 
 		return msgAndReplace(req, String.format("%d번 회원이 삭제되었습니다.", id), "../home/main");
 	}
-
 
 }
