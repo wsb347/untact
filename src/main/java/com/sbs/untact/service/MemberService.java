@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.MemberDao;
 import com.sbs.untact.dto.GenFile;
@@ -63,6 +64,9 @@ public class MemberService {
 
 		genFileService.changeInputFileRelIds(param, id);
 
+		attrService.setValue("member", id, "extra", "needToChangePassword", "0",
+				Util.getDateStrLater(60 * 60 * 24 * 90));
+
 		return new ResultData("S-1", "성공하였습니다.");
 	}
 
@@ -78,8 +82,16 @@ public class MemberService {
 		return memberDao.getMemberByNickname(nickname);
 	}
 
-	public ResultData modifyMember(Map<String, Object> param) {
+	public ResultData modifyMember(int id, Map<String, Object> param) {
 		memberDao.modifyMember(param);
+
+		if (param.get("loginPw") != null) {
+			attrService.remove("member", id, "extra", "useTempPassword");
+
+			attrService.setValue("member", id, "extra", "needToChangePassword", "0",
+					Util.getDateStrLater(60 * 60 * 24 * +90));
+		}
+
 		return new ResultData("S-1", "회원정보가 수정되었습니다.");
 	}
 
@@ -178,6 +190,7 @@ public class MemberService {
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
+		attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
 		memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
 
@@ -189,15 +202,22 @@ public class MemberService {
 
 		return new ResultData("F-1", "유효하지 않은 키 입니다.");
 	}
-	
-	  public String genCheckPasswordAuthCode(int actorId) {
-	        String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
-	        String authCode = UUID.randomUUID().toString();
-	        String expireDate = Util.getDateStrLater(60 * 60);
 
-	        attrService.setValue(attrName, authCode, expireDate);
+	public String genCheckPasswordAuthCode(int actorId) {
+		String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
+		String authCode = UUID.randomUUID().toString();
+		String expireDate = Util.getDateStrLater(60 * 60);
 
-	        return authCode;
-	    }
+		attrService.setValue(attrName, authCode, expireDate);
 
+		return authCode;
+	}
+
+	public boolean isUsingTempPassword(int actorId) {
+		return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
+	}
+
+	public boolean needToChangePassword(int actorId) {
+		return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
+	}
 }

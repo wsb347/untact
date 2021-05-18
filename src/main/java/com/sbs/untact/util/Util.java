@@ -23,9 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
 	public static String getNowDateStr() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
-		return format1.format(time);
+		return format.format(time);
 	}
 
 	public static Map<String, Object> mapOf(Object... args) {
@@ -380,7 +380,7 @@ public class Util {
 		}
 	}
 
-	  public static String getDateStrLater(int seconds) {
+	  public static String getDateStrLater(long seconds) {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String dateStr = format1.format(System.currentTimeMillis() + seconds * 1000);

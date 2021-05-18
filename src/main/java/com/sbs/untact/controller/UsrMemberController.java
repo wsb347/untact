@@ -203,6 +203,20 @@ public class UsrMemberController extends BaseController {
 
 		String msg = String.format("%s님 환영합니다.", existingMemberByLoginid.getNickname());
 
+		boolean needToChangePassword = memberService.needToChangePassword(existingMemberByLoginid.getId());
+
+		if (needToChangePassword) {
+			msg = "현재 비밀번호를 사용한지 90일이 지났습니다. 비밀번호를 변경해주세요.";
+			redirectUrl = Util.ifEmpty(redirectUrl, "../member/mypage");
+		}
+
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(existingMemberByLoginid.getId());
+
+		if (isUsingTempPassword) {
+			msg = "임시 비밀번호를 변경해주세요.";
+			redirectUrl = Util.ifEmpty(redirectUrl, "../member/mypage");
+		}
+
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
 
 		return Util.msgAndReplace(msg, redirectUrl);
@@ -249,7 +263,7 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/doModify")
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
+	public String doModify(int id, @RequestParam Map<String, Object> param, HttpServletRequest req,
 			String checkPasswordAuthCode) {
 		if (param.isEmpty()) {
 			return Util.msgAndBack("수정할 정보를 입력해주세요.");
@@ -263,7 +277,7 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		memberService.modifyMember(param);
+		memberService.modifyMember(loginedMember.getId(), param);
 
 		return msgAndReplace(req, "정보가 수정되었습니다.", "../member/mypage");
 	}
