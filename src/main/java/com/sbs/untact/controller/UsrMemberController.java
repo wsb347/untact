@@ -32,16 +32,20 @@ public class UsrMemberController extends BaseController {
 		return "usr/member/checkPassword";
 	}
 
-	 @RequestMapping("/usr/member/doCheckPassword")
-	    public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
-	        Member loginedMember = (Member) req.getAttribute("loginedMember");
+	@RequestMapping("/usr/member/doCheckPassword")
+	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-	        if (loginedMember.getLoginPw().equals(loginPw) == false) {
-	            return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
-	        }
+		if (loginedMember.getLoginPw().equals(loginPw) == false) {
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+		}
 
-	        return msgAndReplace(req, "", redirectUri);
-	    }
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUri = Util.getNewUrl(redirectUri, "checkPasswordAuthCode", authCode);
+
+		return msgAndReplace(req, "", redirectUri);
+	}
 
 	@RequestMapping("/usr/member/mypage")
 	public String showMypage(HttpServletRequest req) {
@@ -204,8 +208,9 @@ public class UsrMemberController extends BaseController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
+	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/modify")
-	public String showModify(Integer id, HttpServletRequest req) {
+	public String showModify(Integer id, HttpServletRequest req, String checkPasswordAuthCode) {
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -229,13 +234,33 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, "존재하지 않는 회원번호 입니다.");
 		}
 
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
+
+		System.out.println("checkValidCheckPasswordAuthCodeResultData : " + checkValidCheckPasswordAuthCodeResultData);
+
 		return "usr/member/modify";
 	}
 
 	@RequestMapping("/usr/member/doModify")
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			String checkPasswordAuthCode) {
 		if (param.isEmpty()) {
 			return Util.msgAndBack("수정할 정보를 입력해주세요.");
+		}
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
 		memberService.modifyMember(param);

@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="grid grid-item-float gap-3 mt-4">
-                	<c:set var="modifyUrl" value="modify?id=${loginedMember.id}"/>
+                	<c:set var="modifyUrl" value="modify?id=${loginedMember.id}&checkPasswordAuthCode=${checkPasswordAuthCode}"/>
                     <a href="../member/checkPassword?afterUri=${Util.getUrlEncoded(modifyUrl)}" class="text-blue-500 hover:underline">
                         <span>
                             <i class="fas fa-edit"></i>

@@ -2,6 +2,7 @@ package com.sbs.untact.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,8 @@ public class MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private GenFileService genFileService;
+	@Autowired
+	private AttrService attrService;
 
 	// static 시작
 
@@ -168,7 +171,7 @@ public class MemberService {
 		}
 
 		tempPassword = Util.sha256(tempPassword);
-		
+
 		setTempPassword(actor, tempPassword);
 
 		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
@@ -177,5 +180,24 @@ public class MemberService {
 	private void setTempPassword(Member actor, String tempPassword) {
 		memberDao.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
+
+	public ResultData checkValidCheckPasswordAuthCode(int actorId, String checkPasswordAuthCode) {
+		if (attrService.getValue("member__" + actorId + "__extra__checkPasswordAuthCode")
+				.equals(checkPasswordAuthCode)) {
+			return new ResultData("S-1", "유효한 키 입니다.");
+		}
+
+		return new ResultData("F-1", "유효하지 않은 키 입니다.");
+	}
+	
+	  public String genCheckPasswordAuthCode(int actorId) {
+	        String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
+	        String authCode = UUID.randomUUID().toString();
+	        String expireDate = Util.getDateStrLater(60 * 60);
+
+	        attrService.setValue(attrName, authCode, expireDate);
+
+	        return authCode;
+	    }
 
 }

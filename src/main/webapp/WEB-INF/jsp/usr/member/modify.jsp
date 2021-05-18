@@ -104,6 +104,7 @@
 		<form onsubmit="MemberModify__checkAndSubmit(this); return false;" action="doModify" method="POST">
 			<input type="hidden" name="genFileIdsStr" /> <input type="hidden" name="id" value="${member.id}" />
 			<input type="hidden" name="loginPw" />
+			<input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>아이디</span>
