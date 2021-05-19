@@ -170,6 +170,10 @@ public class MemberService {
 		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
+	public Member getMemberByEmail(String email) {
+		return memberDao.getMemberByEmail(email);
+	}
+
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Util.getTempPassword(6);

@@ -182,8 +182,6 @@ public class AdmBoardController extends BaseController {
 	
 	@RequestMapping("/adm/board/doDelete")
 	public String doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}

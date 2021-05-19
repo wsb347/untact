@@ -45,6 +45,12 @@
 		WHERE nickname = #{nickname}
 	</select>
 
+	<select id="getMemberByEmail" resultType="Member">
+		SELECT * FROM
+		`member`
+		WHERE email = #{email}
+	</select>
+
 	<select id="getMemberByNameAndEmail" resultType="Member">
 		SELECT * FROM
 		`member`

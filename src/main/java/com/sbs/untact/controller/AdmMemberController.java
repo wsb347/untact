@@ -216,8 +216,10 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("수정할 정보를 입력해주세요.");
 		}
 
-		memberService.modifyMember(param);
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
+		memberService.modifyMember(loginedMember.getId(), param);
+		
 		return msgAndReplace(req, "정보가 수정되었습니다.", "../member/list");
 	}
 
@@ -239,6 +241,7 @@ public class AdmMemberController extends BaseController {
 	public String doJoin(@RequestParam Map<String, Object> param) {
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 		Member existingMemberByNickname = memberService.getMemberByNickname((String) param.get("nickname"));
+		Member existingMemberByEmail = memberService.getMemberByEmail((String) param.get("email"));
 
 		if (existingMember != null) {
 			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 로그인아이디입니다.", param.get("loginId")));
@@ -246,6 +249,10 @@ public class AdmMemberController extends BaseController {
 
 		if (existingMemberByNickname != null) {
 			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 닉네임입니다.", param.get("nickname")));
+		}
+
+		if (existingMemberByEmail != null) {
+			return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 이메일입니다.", param.get("email")));
 		}
 
 		if (param.get("loginId") == null) {

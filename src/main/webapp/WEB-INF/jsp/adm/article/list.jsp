@@ -32,7 +32,8 @@
 			<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
 			<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 			<div class="flex items-center mt-10">
-				<a href="${detailUrl}" class="font-bold">NO. ${article.id}</a> <a href="${detailUrl}" class="ml-2 font-light text-gray-600">${article.regDate}</a>
+				<a href="${detailUrl}" class="font-bold">NO. ${article.id}</a>
+				<a href="${detailUrl}" class="ml-2 font-light text-gray-600">${article.regDate}</a>
 				<div class="flex-grow"></div>
 				<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded px-3 hover:bg-gray-500">${article.extra__boardName}</a>
 
