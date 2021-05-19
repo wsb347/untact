@@ -25,9 +25,9 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 			throws Exception {
 		Member loginedMember = null;
 		int loginedMemberId = 0;
-		
+
 		HttpSession session = request.getSession();
-		
+
 		// 기타 유용한 정보를 request에 담는다.
 		Map<String, Object> param = Util.getParamMap(request);
 		String paramJson = Util.toJsonStr(param);
@@ -73,7 +73,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		// 로그인 여부에 관련된 정보를 request에 담는다.
 		boolean isLogined = false;
 		boolean isAdmin = false;
-		
+
 		if (loginedMember != null) {
 			isLogined = true;
 			isAdmin = memberService.isAdmin(loginedMember);
@@ -85,15 +85,23 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		request.setAttribute("loginedMember", loginedMember);
 
 		if (session.getAttribute("loginedMemberId") != null) {
-            loginedMemberId = (int) session.getAttribute("loginedMemberId");
-        }
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
 
-        if (loginedMemberId != 0) {
-            loginedMember = memberService.getMember(loginedMemberId);
-        }
-		
+		if (loginedMemberId != 0) {
+			loginedMember = memberService.getMember(loginedMemberId);
+		}
+
 		request.setAttribute("req", new Req(loginedMember));
-		
+
+		boolean needToChangePassword = false;
+
+		if (loginedMember != null) {
+			needToChangePassword = memberService.needToChangePassword(loginedMember.getId());
+		}
+
+		request.setAttribute("needToChangePassword", needToChangePassword);
+
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }

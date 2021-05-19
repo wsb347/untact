@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="head.jspf"%>
+<%@ page import="com.sbs.untact.util.Util"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
 	function isTouchDevice() {
@@ -20,6 +21,10 @@
 
 		<nav class="menu-box-1">
 			<ul class="flex h-full">
+				<c:if test="${needToChangePassword == true }">
+					<c:set var="modifyUrl" value="modify?id=${loginedMember.id}&checkPasswordAuthCode=${checkPasswordAuthCode}"/>
+                    <li class="text-red-500"><a href="../member/checkPassword?afterUri=${Util.getUrlEncoded(modifyUrl)}" class="h-full flex items-center px-5"><i class="fas fa-exclamation-triangle"></i><span class="hidden sm:block">&nbsp;비밀번호 바꾸기</span></a></li>
+				</c:if>
 				<li><a href="../../usr/home/main" class="h-full flex items-center px-5"> <span><i class="fas fa-home"></i></span> <span class="hidden sm:block">&nbsp;사이트 홈</span>
 				</a></li>
 				<li><a href="../article/list" class="h-full flex items-center px-5"> <span><i class="far fa-newspaper"></i></span> <span class="hidden md:block">&nbsp;게시물</span>
@@ -42,7 +47,7 @@
 					   <li>
 	                        <a href="../member/mypage" class="h-full flex items-center px-5">
 	                            <span>
-	                                <i class="fas fa-sign-out-alt"></i>
+	                                <i class="fas fa-street-view"></i>
 	                            </span>
 	                            <span class="hidden md:block">&nbsp;${loginedMember.nickname}＇s MY PAGE</span>
 	                        </a>
@@ -67,7 +72,7 @@
 	                      </li>
 					</c:if>
 				</ul>
+				
 		</nav>
 	</div>
-
 </header>
