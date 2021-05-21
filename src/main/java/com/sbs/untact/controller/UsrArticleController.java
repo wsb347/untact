@@ -16,11 +16,13 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.BoardService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
@@ -32,6 +34,8 @@ public class UsrArticleController extends BaseController {
 	@Autowired
 	private BoardService boardService;
 	@Autowired
+	private ReplyService replyService;
+	@Autowired
 	private MemberService memberService;
 
 	@RequestMapping("/usr/article/detail")
@@ -39,7 +43,7 @@ public class UsrArticleController extends BaseController {
 		Article article = articleService.getForPrintArticle(id);
 
 		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
-
+		
 		Map<String, GenFile> filesMap = new HashMap<>();
 
 		for (GenFile file : files) {
@@ -53,6 +57,8 @@ public class UsrArticleController extends BaseController {
 			return msgAndBack(req, "존재하지 않는 번호입니다.");
 		}
 
+		List<Reply> replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
+		req.setAttribute("replies", replies);
 		return "usr/article/detail";
 
 	}

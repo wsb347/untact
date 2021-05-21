@@ -5,18 +5,21 @@
 
 <mapper namespace="com.sbs.untact.dao.ReplyDao">
 
-	<select id="getForPrintReplies" resultType="Reply">
-		SELECT R.*,
-		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM reply AS R
-		LEFT JOIN
-		`member` AS M
-		ON R.memberId = M.id
-		WHERE 1
-		AND R.relTypeCode =
-		#{relTypeCode}
-		AND R.relId = #{relId}
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
 	</select>
+
+	 <select id="getForPrintRepliesByRelTypeCodeAndRelId" resultType="Reply">
+        SELECT R.*,
+        IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
+        FROM reply AS R
+        LEFT JOIN `member` AS M
+        ON R.memberId = M.id
+        WHERE R.relTypeCode = #{relTypeCode}
+        AND R.relId = #{relId}
+        AND R.delStatus = 0
+        ORDER BY R.id DESC
+    </select>
 
 	<select id="getReply" resultType="Reply">
 		SELECT R.*
@@ -43,5 +46,18 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+
+	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reply
+		SET
+		regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode =
+		#{relTypeCode},
+		relId = #{relId},
+		`body` = #{body},
+		memberId =
+		#{memberId}
+	</insert>
 
 </mapper>

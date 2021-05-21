@@ -32,10 +32,9 @@
 			<div class="text-gray-500 font-thin text-sm mb-6">${article.body}</div>
 			<div class="flex justify-start mb-4 border-t border-gray-100">
 				<div class="flex w-full mt-1 pt-2">
-				
-					<span class="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-1 text-center rounded-full text-gray-400 cursor-pointer mr-2"> <i class="far fa-heart"></i></span>
-					<img class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
-						src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt="">
+
+					<span class="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-1 text-center rounded-full text-gray-400 cursor-pointer mr-2"> <i class="far fa-heart"></i></span> <img class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
+						alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt="">
 				</div>
 				<div class="flex justify-end w-full mt-1 pt-2">
 					<span class="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer mr-2"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,43 +46,53 @@
 					</span>
 				</div>
 			</div>
-			<div class="flex w-full border-t border-gray-100">
-				<div class="mt-3 flex flex-row">
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
-						댓글:
-						<div class="ml-1 text-gray-400 font-thin text-ms">30</div>
-					</div>
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
-						조회:
-						<div class="ml-1 text-gray-400 font-thin text-ms">60k</div>
-					</div>
-				</div>
-				<div class="mt-3 w-full flex justify-end">
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
-						좋아요:
-						<div class="ml-1 text-gray-400 font-thin text-ms">120k</div>
-					</div>
-				</div>
-			</div>
-			<div class="relative flex items-center self-center w-full max-w-xl py-4 text-gray-600 focus-within:text-gray-400">
-				<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200"> <span class="absolute inset-y-0 right-0 flex items-center pr-6">
-					<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
-						<svg class="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+			
+			<c:if test="${loginedMember != null}">
+				<form method="POST" action="../reply/doAdd" class="relative flex py-4 text-gray-600 focus-within:text-gray-400  border-t border-gray-100">
+					<input type="hidden" name="relId" value="${article.id}" />
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="redirectUrl" value="../article/detail?id=${article.id}" />
+					<span class="absolute inset-y-0 right-0 flex items-center pr-3">
+						<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
+							<i class="fas fa-comment-dots"></i>
+						</button>
+					</span> <input name="body" type="text" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+				</form>
+			</c:if>
 
-					</button>
-				</span> <input type="search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+			<div>
+				<c:forEach items="${replies}" var="reply">
+					<div class="flex py-5 px-4">
+						<!-- 아바타 이미지 -->
+						<div class="flex-shrink-0">
+							<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="${reply.writerThumbImgUrl}">
+						</div>
+
+						<div class="flex-grow px-1">
+							<div class="flex text-gray-400 text-light text-sm">
+								<spqn>${reply.extra__writerName}</spqn>
+								<span class="mx-1">·</span>
+								<spqn>${reply.updateDate}</spqn>
+							</div>
+							<div class="break-all">${reply.bodyForPrint}</div>
+							<div class="mt-1">
+								<span> <span>업</span> <span>5,600</span>
+								</span> <span class="ml-1"> <span>다</span> <span>5,600</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-		</div>
-		<div class="form-row flex flex-col lg:flex-row mt-5">
-			<div class="lg:flex-grow">
-				<div class="btns">
-					<input onclick="history.go(-2); return false;" type="button" class="btn-info bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" value="목록">
+
+			<div class="form-row flex flex-col lg:flex-row mt-5">
+				<div class="lg:flex-grow">
+					<div class="btns">
+						<input onclick="history.go(-2); return false;" type="button" class="btn-info bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" value="목록">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

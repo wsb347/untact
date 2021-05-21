@@ -117,55 +117,6 @@ WHERE id IN (1, 2);
 UPDATE article
 SET boardId = 2
 WHERE id IN (3);
-
-# 댓글 테이블 추가
-CREATE TABLE reply (
-  id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  regDate DATETIME NOT NULL,
-  updateDate DATETIME NOT NULL,
-  articleId INT(10) UNSIGNED NOT NULL,
-  memberId INT(10) UNSIGNED NOT NULL,
-  `body` TEXT NOT NULL
-);
-
-INSERT INTO reply
-SET regDate = NOW(),
-updateDate = NOW(),
-articleId = 1,
-memberId = 1,
-`body` = "내용1 입니다.";
-
-INSERT INTO reply
-SET regDate = NOW(),
-updateDate = NOW(),
-articleId = 1,
-memberId = 2,
-`body` = "내용2 입니다.";
-
-INSERT INTO reply
-SET regDate = NOW(),
-updateDate = NOW(),
-articleId = 2,
-memberId = 2,
-`body` = "내용3 입니다.";
-
-# 게시물 전용 댓글에서 범용 댓글로 바꾸기 위해 relTypeCode 추가
-ALTER TABLE reply ADD COLUMN `relTypeCode` CHAR(20) NOT NULL AFTER updateDate;
-
-# 현재는 게시물 댓글 밖에 없기 때문에 모든 행의 relTypeCode 값을 article 로 지정
-UPDATE reply
-SET relTypeCode = 'article'
-WHERE relTypeCode = '';
-
-# articleId 칼럼명을 relId로 수정
-ALTER TABLE reply CHANGE `articleId` `relId` INT(10) UNSIGNED NOT NULL;
-
-# 고속 검색을 위해서 인덱스 걸기
-ALTER TABLE reply ADD KEY (relTypeCode, relId); 
-# SELECT * FROM reply WHERE relTypeCode = 'article' AND relId = 5; # O
-# SELECT * FROM reply WHERE relTypeCode = 'article'; # O
-# SELECT * FROM reply WHERE relId = 5 AND relTypeCode = 'article'; # X
-
 # authKey 칼럼을 추가
 ALTER TABLE `member` ADD COLUMN authKey CHAR(80) NOT NULL AFTER loginPw;
 
@@ -213,6 +164,7 @@ UPDATE `member`
 SET authLevel = 7
 WHERE id = 1;
 
+#글 무한개로 늘리기
 INSERT INTO article
 (regDate, updateDate, memberId, title, `body`, boardId)
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), FLOOR(RAND() * 4) + 1
@@ -288,3 +240,26 @@ ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
 SELECT * FROM attr;
 
+# 댓글 테이블 생성
+CREATE TABLE `reply` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '번호',
+    regDate DATETIME NOT NULL COMMENT '작성날짜',
+    updateDate DATETIME NOT NULL COMMENT '수정날짜',
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입',
+    relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터 ID',
+    parentId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '부모댓글 ID',
+    memberId INT(10) UNSIGNED NOT NULL COMMENT '회원 ID',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부',
+    delDate DATETIME COMMENT '삭제날짜',
+    `body` TEXT NOT NULL COMMENT '내용',
+    blindStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '블라인드여부',
+    blindDate DATETIME COMMENT '블라인드날짜',
+    hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '조회수',
+    repliesCount INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '댓글수',
+    likeCount INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '좋아요수',
+    dislikeCount INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '싫어요수'
+);
+
+# 특정 데이터에 관련된 댓글을 읽어는 속도를 빠르게 하기위해
+# 인덱스를 건다.
+ALTER TABLE `reply` ADD KEY (`relTypeCode`, `relId`);

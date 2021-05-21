@@ -1,13 +1,16 @@
 package com.sbs.untact.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Member;
@@ -17,11 +20,31 @@ import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
 
 @Controller
-public class UsrReplyController {
+public class UsrReplyController extends BaseController {
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
 	private ArticleService articleService;
+
+	@RequestMapping("/usr/reply/doAdd")
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		
+		if (param.get("body") == null) {
+			return msgAndBack(req, "body를 입력해주세요.");
+		}
+
+		if (loginedMember == null) {
+			return msgAndBack(req, "작성자만 가능합니다");
+		}
+		
+		param.put("memberId", loginedMemberId);
+
+		ResultData addReplyRd = replyService.addReply(param);
+
+		return msgAndReplace(req, addReplyRd.getMsg(), redirectUrl);
+	}
 
 	@RequestMapping("/usr/reply/list")
 	@ResponseBody
@@ -29,7 +52,7 @@ public class UsrReplyController {
 		if (relTypeCode == null) {
 			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
 		}
-		
+
 		if (relId == null) {
 			return new ResultData("F-1", "relId를 입력해주세요.");
 		}
@@ -42,7 +65,7 @@ public class UsrReplyController {
 			}
 		}
 
-		List<Reply> replies = replyService.getForPrintReplies(relTypeCode, relId);
+		List<Reply> replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId(relTypeCode, relId);
 
 		return new ResultData("S-1", "성공", "replies", replies);
 	}
@@ -51,7 +74,7 @@ public class UsrReplyController {
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
-		
+
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -75,7 +98,7 @@ public class UsrReplyController {
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
-		
+
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
