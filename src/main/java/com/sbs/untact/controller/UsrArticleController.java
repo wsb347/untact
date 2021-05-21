@@ -148,9 +148,9 @@ public class UsrArticleController extends BaseController {
 
 		param.put("memberId", loginedMemberId);
 
-		articleService.addArticle(param);
+		ResultData addArticleRd = articleService.addArticle(param);
 
-		int newArticleId = (int) param.get("id");
+		int newArticleId = (int) addArticleRd.getBody().get("id");
 
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
 				"../article/detail?id=" + newArticleId);
