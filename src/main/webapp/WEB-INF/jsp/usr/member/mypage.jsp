@@ -11,7 +11,7 @@
             <div class="bg-white px-4 py-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                		<div class="row-span-3 order-1">
-                       	<img width="150px" class="rounded-full" src="${loginedMember.writerThumbImgUrl}" alt="User avatar">
+                       	<img width="150px" class="rounded-full" src="${loginedMember.writerThumbImgUrl}" alt="User avatar" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
                    	</div>
                 	<div class="order-2">
                         <span class="badge badge-primary">번호</span>

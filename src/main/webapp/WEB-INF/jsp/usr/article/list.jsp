@@ -53,7 +53,7 @@
 				</c:if>
 				<div class="flex-grow"></div>
 				<div>
-					<a class="flex items-center"><img src="${article.writerThumbImgUrl}" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
+					<a class="flex items-center"><img src="${article.writerThumbImgUrl}" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
 						<h1 class="text-gray-700 font-bold">${article.extra__writer}</h1> </a>
 				</div>
 			</div>

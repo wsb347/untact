@@ -61,7 +61,8 @@
 				<div>
 					<a class="flex items-center"> <img
 						src="${member.writerThumbImgUrl}"
-						alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
+						alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full"
+						onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
 						<h1 class="text-gray-700 font-bold hover:underline">${member.nickname}</h1>
 					</a>
 				</div>

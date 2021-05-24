@@ -31,7 +31,7 @@
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
 				<div class="rounded-full border-2 border-pink-500">
-					<img class="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src="${article.writerThumbImgUrl}">
+					<img class="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src="${article.writerThumbImgUrl}" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
 				</div>
 				<div class="flex flex-col mb-2 ml-4 mt-1">
 					<div class="text-gray-600 text-sm font-semibold">${article.extra__writer}</div>
@@ -85,7 +85,7 @@
 					<div class="flex py-5 px-4">
 						<!-- 아바타 이미지 -->
 						<div class="flex-shrink-0">
-							<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="${reply.writerThumbImgUrl}">
+							<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="${reply.writerThumbImgUrl}" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';" >
 						</div>
 
 						<div class="flex-grow px-1">

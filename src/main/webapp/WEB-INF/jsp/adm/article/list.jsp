@@ -41,7 +41,7 @@
 			<div class="mt-2">
 				<a href="${detailUrl}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 				<c:if test="${thumbUrl != null}">
-					<a class="block" href="${detailUrl}"> <img class="max-w-xs" src="${thumbUrl}" alt="" />
+					<a class="block" href="${detailUrl}"> <img class="max-w-xs" src="${thumbUrl}" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';"/>
 					</a>
 				</c:if>
 				<a href="${detailUrl}" class="mt-2 text-gray-600 block">${article.body}</a>
@@ -52,7 +52,7 @@
 				<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="ml-2 text-blue-500 hover:underline">삭제</a>
 				<div class="flex-grow"></div>
 				<div>
-					<a class="flex items-center"><img src="${article.writerThumbImgUrl}" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
+					<a class="flex items-center"><img src="${article.writerThumbImgUrl}" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
 						<h1 class="text-gray-700 font-bold">${article.extra__writer}</h1> </a>
 				</div>
 			</div>
