@@ -42,7 +42,7 @@ public class AdmReplyController {
 			}
 		}
 
-		List<Reply> replies = replyService.getForPrintReplies(relTypeCode, relId);
+		List<Reply> replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId(relTypeCode, relId);
 
 		return new ResultData("S-1", "성공", "replies", replies);
 	}

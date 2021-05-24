@@ -6,6 +6,26 @@
 
 <c:set var="fileInputMaxCount" value="10" />
 
+<script>
+	ReplyAdd__submited = false;
+	function ReplyAdd__checkAndSubmit(form) {
+		if (ReplyAdd__submited) {
+			alert('처리중입니다.');
+			return;
+		}
+		
+		form.body.value = form.body.value.trim();
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+			return false;
+		}
+		
+		form.submit();
+		ReplyAdd__submited = true;
+	}
+</script>
+
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="w-full">
@@ -48,7 +68,7 @@
 			</div>
 			
 			<c:if test="${loginedMember != null}">
-				<form method="POST" action="../reply/doAdd" class="relative flex py-4 text-gray-600 focus-within:text-gray-400  border-t border-gray-100">
+				<form method="POST" onsubmit="ReplyAdd__checkAndSubmit(this); return false;" action="../reply/doAdd" class="relative flex py-4 text-gray-600 focus-within:text-gray-400  border-t border-gray-100">
 					<input type="hidden" name="relId" value="${article.id}" />
 					<input type="hidden" name="relTypeCode" value="article" />
 					<input type="hidden" name="redirectUrl" value="../article/detail?id=${article.id}" />
@@ -75,11 +95,21 @@
 								<spqn>${reply.updateDate}</spqn>
 							</div>
 							<div class="break-all">${reply.bodyForPrint}</div>
-							<div class="mt-1">
-								<span> <span>업</span> <span>5,600</span>
-								</span> <span class="ml-1"> <span>다</span> <span>5,600</span>
-								</span>
-							</div>
+							 <div class="mt-1">
+                                <span class="text-gray-400 cursor-pointer">
+                                    <span><i class="fas fa-thumbs-up"></i></span>
+                                    <span>5,600</span>
+                                </span>
+                                <span class="ml-1 text-gray-400 cursor-pointer">
+                                    <span><i class="fas fa-thumbs-down"></i></span>
+                                    <span>5,600</span>
+                                </span>
+                            </div>
+							<c:if test="${reply.extra__writerName == loginedMember.nickname }">
+								<c:set var="redirectUrl" value="../article/detail?id=${article.id}"/>
+								<a href="../reply/modify?id=${reply.id}&redirectUrl=${redirectUrl}" class="text-blue-500 hover:underline">수정</a>
+								<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="../reply/doDelete?id=${reply.id}&redirectUrl=${redirectUrl}" class="ml-2 text-blue-500 hover:underline">삭제</a>
+							</c:if>
 						</div>
 					</div>
 				</c:forEach>
@@ -88,7 +118,7 @@
 			<div class="form-row flex flex-col lg:flex-row mt-5">
 				<div class="lg:flex-grow">
 					<div class="btns">
-						<input onclick="history.go(-2); return false;" type="button" class="btn-info bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" value="목록">
+						<input onclick="history.back(); return false;" type="button" class="btn-info bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" value="목록">
 					</div>
 				</div>
 			</div>

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Member;
@@ -52,7 +51,7 @@ public class UsrReplyController extends BaseController {
 		if (relTypeCode == null) {
 			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
 		}
-
+		
 		if (relId == null) {
 			return new ResultData("F-1", "relId를 입력해주세요.");
 		}
@@ -71,54 +70,47 @@ public class UsrReplyController extends BaseController {
 	}
 
 	@RequestMapping("/usr/reply/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
+	public String doDelete(HttpServletRequest req, Integer id, String redirectUrl) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
-
-		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMember);
-
-		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+		
+		if(reply.getMemberId() != loginedMember.getId()) {
+			return msgAndBack(req, "본인 댓글만 가능합니다.");	
 		}
-
-		return replyService.deleteReply(id);
+		
+		ResultData deleteReply = replyService.deleteReply(id);
+		return msgAndReplace(req, deleteReply.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMemberId");
-
+	public String doModify(Integer id, String body, HttpServletRequest req) {
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		if (body == null) {
-			return new ResultData("F-1", "body를 입력해주세요.");
+			return msgAndBack(req, "body를 입력해주세요.");
 		}
 
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = replyService.getActorCanModifyRd(reply, loginedMember);
-
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
-		}
-
-		return replyService.modifyReply(id, body);
+		String redirectUrl = "";
+		
+		ResultData modifyReply = replyService.modifyReply(id, body);
+		return msgAndReplace(req, modifyReply.getMsg(), redirectUrl);
 	}
 }
