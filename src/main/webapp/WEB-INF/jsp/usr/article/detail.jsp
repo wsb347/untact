@@ -13,20 +13,20 @@
 			alert('처리중입니다.');
 			return;
 		}
-		
+
 		form.body.value = form.body.value.trim();
 		if (form.body.value.length == 0) {
 			alert('내용을 입력해주세요.');
 			form.body.focus();
 			return false;
 		}
-		
+
 		form.submit();
 		ReplyAdd__submited = true;
 	}
 </script>
 
-<section class="section-1">
+<section class="section-1" method="POST">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
@@ -66,13 +66,10 @@
 					</span>
 				</div>
 			</div>
-			
+
 			<c:if test="${loginedMember != null}">
 				<form method="POST" onsubmit="ReplyAdd__checkAndSubmit(this); return false;" action="../reply/doAdd" class="relative flex py-4 text-gray-600 focus-within:text-gray-400  border-t border-gray-100">
-					<input type="hidden" name="relId" value="${article.id}" />
-					<input type="hidden" name="relTypeCode" value="article" />
-					<input type="hidden" name="redirectUrl" value="../article/detail?id=${article.id}" />
-					<span class="absolute inset-y-0 right-0 flex items-center pr-3">
+					<input type="hidden" name="relId" value="${article.id}" /> <input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="redirectUrl" value="../article/detail?id=${article.id}" /> <span class="absolute inset-y-0 right-0 flex items-center pr-3">
 						<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
 							<i class="fas fa-comment-dots"></i>
 						</button>
@@ -85,7 +82,7 @@
 					<div class="flex py-5 px-4">
 						<!-- 아바타 이미지 -->
 						<div class="flex-shrink-0">
-							<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="${reply.writerThumbImgUrl}" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';" >
+							<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="${reply.writerThumbImgUrl}" onerror="this.src = 'https://via.placeholder.com/150?text=NO IMAGE';">
 						</div>
 
 						<div class="flex-grow px-1">
@@ -95,19 +92,14 @@
 								<spqn>${reply.updateDate}</spqn>
 							</div>
 							<div class="break-all">${reply.bodyForPrint}</div>
-							 <div class="mt-1">
-                                <span class="text-gray-400 cursor-pointer">
-                                    <span><i class="fas fa-thumbs-up"></i></span>
-                                    <span>5,600</span>
-                                </span>
-                                <span class="ml-1 text-gray-400 cursor-pointer">
-                                    <span><i class="fas fa-thumbs-down"></i></span>
-                                    <span>5,600</span>
-                                </span>
-                            </div>
+							<div class="mt-1">
+								<span class="text-gray-400 cursor-pointer"> <span><i class="fas fa-thumbs-up"></i></span> <span>5,600</span>
+								</span> <span class="ml-1 text-gray-400 cursor-pointer"> <span><i class="fas fa-thumbs-down"></i></span> <span>5,600</span>
+								</span>
+							</div>
 							<c:if test="${reply.extra__writerName == loginedMember.nickname }">
-								<c:set var="redirectUrl" value="../article/detail?id=${article.id}"/>
-								<a href="../reply/modify?id=${reply.id}&redirectUrl=${redirectUrl}" class="text-blue-500 hover:underline">수정</a>
+								<c:set var="modifyUrl" value="../reply/modify?id=${reply.id}"/>
+								<a href="${modifyUrl}" class="text-blue-500 hover:underline">수정</a>
 								<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="../reply/doDelete?id=${reply.id}&redirectUrl=${redirectUrl}" class="ml-2 text-blue-500 hover:underline">삭제</a>
 							</c:if>
 						</div>

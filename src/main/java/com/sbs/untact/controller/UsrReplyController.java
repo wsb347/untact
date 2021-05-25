@@ -77,7 +77,7 @@ public class UsrReplyController extends BaseController {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
-		Reply reply = replyService.getReply(id);
+		Reply reply = replyService.getReply("article", id);
 
 		if (reply == null) {
 			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
@@ -90,10 +90,25 @@ public class UsrReplyController extends BaseController {
 		ResultData deleteReply = replyService.deleteReply(id);
 		return msgAndReplace(req, deleteReply.getMsg(), redirectUrl);
 	}
+	
+	@RequestMapping("/usr/reply/modify")
+	public String showModify(Integer id, HttpServletRequest req) {
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
 
+		Reply reply= replyService.getReply("article", id);
+		req.setAttribute("reply", reply);
+		
+		if (reply == null) {
+			return msgAndBack(req, "존재하지 않는 댓글입니다.");
+		}
+
+		return "usr/reply/modify";
+	}
+	
 	@RequestMapping("/usr/reply/doModify")
-	@ResponseBody
-	public String doModify(Integer id, String body, HttpServletRequest req) {
+	public String doModify(Integer id, String body, HttpServletRequest req, String redirectUrl) {
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -102,15 +117,14 @@ public class UsrReplyController extends BaseController {
 			return msgAndBack(req, "body를 입력해주세요.");
 		}
 
-		Reply reply = replyService.getReply(id);
+		Reply reply = replyService.getReply("article", id);
 
 		if (reply == null) {
 			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
 
-		String redirectUrl = "";
-		
 		ResultData modifyReply = replyService.modifyReply(id, body);
 		return msgAndReplace(req, modifyReply.getMsg(), redirectUrl);
+
 	}
 }

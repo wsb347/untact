@@ -10,7 +10,6 @@ import com.sbs.untact.dao.ReplyDao;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.util.Util;
 
 @Service
 public class ReplyService {
@@ -24,8 +23,8 @@ public class ReplyService {
 		return replyDao.getForPrintRepliesByRelTypeCodeAndRelId(relTypeCode, relId);
 	}
 
-	public Reply getReply(int id) {
-		return replyDao.getReply(id);
+	public Reply getReply(String relTypeCode,int id) {
+		return replyDao.getReply(relTypeCode, id);
 	}
 
 	public ResultData getActorCanDeleteRd(Reply reply, Member actor) {

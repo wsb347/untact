@@ -15,7 +15,7 @@ public interface ReplyDao {
 	List<Reply> getForPrintRepliesByRelTypeCodeAndRelId(@Param("relTypeCode") String relTypeCode,
 			@Param("relId") int relId);
 
-	Reply getReply(@Param("id") int id);
+	Reply getReply(@Param("relTypeCode") String relTypeCode, @Param("id") int id);
 
 	void deleteReply(@Param("id") int id);
 

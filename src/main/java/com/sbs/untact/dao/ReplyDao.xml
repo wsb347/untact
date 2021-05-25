@@ -22,11 +22,15 @@
     </select>
 
 	<select id="getReply" resultType="Reply">
-		SELECT R.*
+		SELECT R.*,
+		IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
 		FROM reply AS R
-		WHERE
-		1
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.relTypeCode = #{relTypeCode}
+		AND R.delStatus = 0
 		AND R.id = #{id}
+		ORDER BY R.id DESC
 	</select>
 
 	<delete id="deleteReply">
