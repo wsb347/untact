@@ -98,6 +98,7 @@
 								</span>
 							</div>
 							<c:if test="${reply.extra__writerName == loginedMember.nickname }">
+								<c:set var="redirectUrl" value="../article/detail?id=${article.id}" />
 								<c:set var="modifyUrl" value="../reply/modify?id=${reply.id}"/>
 								<a href="${modifyUrl}" class="text-blue-500 hover:underline">수정</a>
 								<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="../reply/doDelete?id=${reply.id}&redirectUrl=${redirectUrl}" class="ml-2 text-blue-500 hover:underline">삭제</a>

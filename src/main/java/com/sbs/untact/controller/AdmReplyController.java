@@ -56,7 +56,7 @@ public class AdmReplyController {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
-		Reply reply = replyService.getReply(id);
+		Reply reply = replyService.getReply("article",id);
 
 		if (reply == null) {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
@@ -84,7 +84,7 @@ public class AdmReplyController {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
-		Reply reply = replyService.getReply(id);
+		Reply reply = replyService.getReply("article", id);
 
 		if (reply == null) {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
