@@ -16,10 +16,12 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.BoardService;
 import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
@@ -30,6 +32,8 @@ public class AdmArticleController extends BaseController {
 	private GenFileService genFileService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private ReplyService replyService;
 
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
@@ -50,6 +54,9 @@ public class AdmArticleController extends BaseController {
 			return msgAndBack(req, "존재하지 않는 번호입니다.");
 		}
 
+		List<Reply> replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
+		req.setAttribute("replies", replies);
+		
 		return "adm/article/detail";
 
 	}

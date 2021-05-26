@@ -35,7 +35,7 @@ public class UsrReplyController extends BaseController {
 		}
 
 		if (loginedMember == null) {
-			return msgAndBack(req, "작성자만 가능합니다");
+			return msgAndBack(req, "로그인 후 이용해주세요.");
 		}
 		
 		param.put("memberId", loginedMemberId);
