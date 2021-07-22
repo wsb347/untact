@@ -16,23 +16,7 @@
 		if (MemberModify__submited) {
 			return;
 		}
-		form.loginPwInput.value = form.loginPwInput.value.trim();
-		if (form.loginPwInput.value.length == 0) {
-			alert('로그인비번을 입력해주세요.');
-			form.loginPwInput.focus();
-			return;
-		}
-		if (form.loginPwConfirm.value.length == 0) {
-			alert('로그인비번 확인을 입력해주세요.');
-			form.loginPwConfirm.focus();
-			return;
-		}
-		if (form.loginPwInput.value != form.loginPwConfirm.value) {
-			alert('로그인비번이 일치하지 않습니다.');
-			form.loginPwConfirm.focus();
-			return;
-		}
-
+		
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
 			alert('이름을 입력해주세요.');
@@ -109,22 +93,6 @@
 					<span>로그인아이디</span>
 				</div>
 				<div class="lg:flex-grow">${member.loginId}</div>
-			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>로그인비번</span>
-				</div>
-				<div class="lg:flex-grow">
-					<input type="password" name="loginPwInput" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호를 입력해주세요." />
-				</div>
-			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>로그인비번 확인</span>
-				</div>
-				<div class="lg:flex-grow">
-					<input type="password" name="loginPwConfirm" autofocus="autofocus" class="form-row-input w-full rounded-sm" placeholder="로그인비밀번호 확인을 입력해주세요." />
-				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">

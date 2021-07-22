@@ -1,6 +1,6 @@
-server:
-  port: 8088
 spring:
+  profiles:
+    active: local # 기본적으로 local이 선택된다는 뜻
   mail:
     host: smtp.gmail.com
     port: 587
@@ -14,26 +14,59 @@ spring:
             enable: true
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      file-size-threshold: 1MB
+      location: C:\temp
+      max-file-size: 100MB
+      max-request-size: 100MB
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    #driver-class-name: com.mysql.cj.jdbc.Driver
+    # driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/untact?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
     username: sbsst
     password: sbs123414
 mybatis:
   type-aliases-package: com.sbs.untact.dto
+server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+    include-binding-errors: always
 custom:
-  siteMainUri: http://localhost:8088/
+  siteMainUri: http://untact.popol.site/
   siteName: 언택트
   emailFrom: no-reply@localhost
   emailFromName: 언택트알림봇
   genFileDirPath: D:/work/untact-file
   logging:
     dir: log
-    level: debug
+    level: info
+
+---
+
+spring:
+  profiles: local
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: production
+  servlet:
+    multipart:
+      location: /tmp
+  datasource:
+    username: sbsstLocal
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/untact?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+custom:
+  genFileDirPath: /opt/tomcat/latest/untact.popol.site-file
+  logging:
+    dir: /tmp/untact-log
+    level: info

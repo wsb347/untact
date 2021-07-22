@@ -22,24 +22,24 @@
 		$.get('getLoginIdDup', {
 			loginId : form.loginId.value
 		},
-			function(data) {
-				let colorClass = 'text-green-500';
+				function(data) {
+					let colorClass = 'text-green-500';
 
-				if (data.fail) {
-					colorClass = 'text-red-500';
-				}
+					if (data.fail) {
+						colorClass = 'text-red-500';
+					}
 
-				$('.loginIdInputMsg').html(
-						"<span class='" + colorClass + "'>" + data.msg
-								+ "</span>");
+					$('.loginIdInputMsg').html(
+							"<span class='" + colorClass + "'>" + data.msg
+									+ "</span>");
 
-				if (data.fail) {
-					form.loginId.focus();
-				} else {
-					JoinForm__validLoginId = data.body.loginId;
-				}
+					if (data.fail) {
+						form.loginId.focus();
+					} else {
+						JoinForm__validLoginId = data.body.loginId;
+					}
 
-			}, 'json');
+				}, 'json');
 	}
 
 	function JoinForm__checkAndSubmit(form) {
@@ -93,16 +93,21 @@
 			form.cellphoneNo.focus();
 			return;
 		}
+		const maxSizeMb = 50;
+		const maxSize = maxSizeMb * 1024 * 1024;
+		const profileImgFileInput = form["file__member__0__common__attachment__1"];
+		if (profileImgFileInput.value) {
+			if (profileImgFileInput.files[0].size > maxSize) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				profileImgFileInput.focus();
+				return;
+			}
+		}
+
 		form.email.value = form.email.value.trim();
 		if (form.email.value.length == 0) {
 			alert('이메일을 입력해주세요.');
 			form.email.focus();
-			return;
-		}
-		form.cellphoneNo.value = form.cellphoneNo.value.trim();
-		if (form.cellphoneNo.value.length == 0) {
-			alert('휴대전화번호를 입력해주세요.');
-			form.cellphoneNo.focus();
 			return;
 		}
 		const submitForm = function(data) {

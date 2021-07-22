@@ -30,9 +30,9 @@
 				</a>
 					<div>
 						<ul>
-							<li><a href="http://localhost:8088/adm/member/list?authLevel=3"> <span><i class="far fa-user"></i></span> <span>&nbsp;일반 회원</span>
+							<li><a href="../member/list?authLevel=3"> <span><i class="far fa-user"></i></span> <span>&nbsp;일반 회원</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/member/list?authLevel=7"> <span><i class="far fa-user"></i></span> <span>&nbsp;관리자</span>
+							<li><a href="../member/list?authLevel=7"> <span><i class="far fa-user"></i></span> <span>&nbsp;관리자</span>
 							</a></li>
 						</ul>
 					</div></li>
@@ -43,15 +43,15 @@
 				</a>
 					<div>
 						<ul>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=1"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;공지사항 게시판</span>
+							<li><a href="../article/list?boardId=1"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;공지사항 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=2"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;자유 게시판</span>
+							<li><a href="../article/list?boardId=2"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;자유 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=3"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;신고 게시판</span>
+							<li><a href="../article/list?boardId=3"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;신고 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=4"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;Q&A 게시판</span>
+							<li><a href="../article/list?boardId=4"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;Q&A 게시판</span>
 							</a></li>
-							<li><a href="http://localhost:8088/adm/article/list?boardId=0"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;보존 게시판</span>
+							<li><a href="../article/list?boardId=0"> <span><i class="far fa-clipboard"></i></span> <span>&nbsp;보존 게시판</span>
 							</a></li>
 						</ul>
 					</div></li>

@@ -71,7 +71,7 @@
 				test="loginPw != null || name != null || nickname != null || cellphoneNo != null || email != null">
 				updateDate = NOW(),
 			</if>
-			<if test="loginPw != null">
+			<if test="loginPw == null">
 				loginPw = #{loginPw},
 			</if>
 			<if test="name != null">

@@ -50,22 +50,7 @@
 			</div>
 			<div class="text-gray-600 font-semibold text-lg mb-2">${article.title}</div>
 			<div class="text-gray-500 font-thin text-sm mb-6">${article.body}</div>
-			<div class="flex justify-start mb-4 border-t border-gray-100">
-				<div class="flex w-full mt-1 pt-2">
-
-					<span class="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-1 text-center rounded-full text-gray-400 cursor-pointer mr-2"> <i class="far fa-heart"></i></span> <img class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-						alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt=""> <img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt="">
-				</div>
-				<div class="flex justify-end w-full mt-1 pt-2">
-					<span class="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer mr-2"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                  </svg>
-					</span> <span class="transition ease-out duration-300 hover:bg-blue-500 bg-blue-600 h-8 px-2 py-2 text-center rounded-full text-gray-100 cursor-pointer"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                  </svg>
-					</span>
-				</div>
-			</div>
+			
 
 			<c:if test="${loginedMember != null}">
 				<form method="POST" onsubmit="ReplyAdd__checkAndSubmit(this); return false;" action="../reply/doAdd" class="relative flex py-4 text-gray-600 focus-within:text-gray-400  border-t border-gray-100">
@@ -92,11 +77,6 @@
 								<spqn>${reply.updateDate}</spqn>
 							</div>
 							<div class="break-all">${reply.bodyForPrint}</div>
-							<div class="mt-1">
-								<span class="text-gray-400 cursor-pointer"> <span><i class="fas fa-thumbs-up"></i></span> <span>5,600</span>
-								</span> <span class="ml-1 text-gray-400 cursor-pointer"> <span><i class="fas fa-thumbs-down"></i></span> <span>5,600</span>
-								</span>
-							</div>
 							<c:if test="${reply.extra__writerName == loginedMember.nickname }">
 								<c:set var="redirectUrl" value="../article/detail?id=${article.id}" />
 								<c:set var="modifyUrl" value="../reply/modify?id=${reply.id}"/>
