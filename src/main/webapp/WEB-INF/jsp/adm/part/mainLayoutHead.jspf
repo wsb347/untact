@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="head.jspf"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
 	function isTouchDevice() {
 		return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
@@ -13,7 +13,7 @@
 
 <header class="top-bar h-10 top-bar--fly">
 	<div class="container mx-auto flex h-full">
-		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-cat"></i></span> <span class="hidden sm:block">&nbsp;ADMIN</span>
+		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-tint"></i></span> <span class="hidden sm:block">&nbsp;물방울 관리자</span>
 		</a>
 
 		<div class="flex-grow"></div>

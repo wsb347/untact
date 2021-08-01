@@ -1,5 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<footer class="bottom-bar h-10 bg-white mt-6">
+	<div class="container mx-auto h-full flex items-center justify-center">
+		<div class="top-bar__logo flex items-center">
+			<span><i class="fas fa-tint"></i></span> <span class="ml-2 font-bold">물방울</span>
+		</div>
+		<span class="ml-2">@All rights reserved</span>
+	</div>
+</footer>
 </body>
 </html>

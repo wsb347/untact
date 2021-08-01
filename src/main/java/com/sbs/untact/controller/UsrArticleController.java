@@ -35,8 +35,6 @@ public class UsrArticleController extends BaseController {
 	private BoardService boardService;
 	@Autowired
 	private ReplyService replyService;
-	@Autowired
-	private MemberService memberService;
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {

@@ -111,6 +111,18 @@
 
 	<build>
 		<plugins>
+		<!-- 여기 -->
+		  <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <server>untact__manager_text</server>
+                    <url>http://untact.popol.site:8080/manager/text</url>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

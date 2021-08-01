@@ -14,7 +14,7 @@
 
 <header class="top-bar h-10 top-bar--fly">
 	<div class="container mx-auto flex h-full">
-		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-cat"></i></span> <span class="hidden sm:block">&nbsp;UNTACT</span>
+		<a href="../home/main" class="px-3 flex items-center"> <span><i class="fas fa-tint"></i></span> <span class="hidden sm:block">&nbsp;물방울</span>
 		</a>
 
 		<div class="flex-grow"></div>
